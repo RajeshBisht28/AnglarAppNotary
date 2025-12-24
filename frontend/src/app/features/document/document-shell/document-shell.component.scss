@@ -1,0 +1,47 @@
+.notary-container {
+  padding: 0;
+}
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+mat-card.sign-mode {
+  height: 100vh; /* lock layout to viewport for independent inner scrolling */
+}
+
+notary-stepper {
+  position: sticky;
+  top: 56px;
+  z-index: 9;
+  background: #fff;
+}
+
+document-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: block;
+}
+
+.form-container {
+  flex: 1 1 auto;
+  overflow: auto;
+  min-height: 0; /* allow inner routes to manage their own scroll */
+}
+
+.form-container.no-outer-scroll {
+  overflow: hidden;
+}
+
+document-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: block;
+}

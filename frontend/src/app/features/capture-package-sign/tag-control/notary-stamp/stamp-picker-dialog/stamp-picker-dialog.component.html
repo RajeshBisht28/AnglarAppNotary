@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Select Notary Stamp</h2>
+<div mat-dialog-content class="picker-content">
+  <!-- <div class="loading-container" *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate" diameter="32"></mat-progress-spinner>
+  </div> -->
+
+  <div class="error-text" *ngIf="!loading && error">{{ error }}</div>
+
+  <div class="grid" *ngIf="!loading && !error">
+    <div
+      class="grid-item"
+      *ngFor="let b64 of sealsBase64; let i = index"
+      [class.grid-item--selected]="isSelected(i)"
+      (click)="select(i)"
+      tabindex="0"
+      role="button"
+    >
+      <img [src]="'data:image/png;base64,' + b64" alt="Notary Seal" />
+      <mat-icon class="check-icon" *ngIf="isSelected(i)">check_circle</mat-icon>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="close()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="useSelected()">Use Stamp</button>
+</div>

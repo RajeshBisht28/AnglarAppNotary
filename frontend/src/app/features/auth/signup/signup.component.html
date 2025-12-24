@@ -1,0 +1,122 @@
+<div class="login-card">
+    <div class="login-header">
+        <img src="assets/doccentral-logo.png" alt="Leaflet" class="logo">
+        <h1>Create Account</h1>
+        <p class="subtitle">Fill in your details to sign up</p>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="login-form">
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required>
+            <mat-icon matPrefix>mail_outline</mat-icon>
+            <mat-error *ngIf="email?.errors?.['required']">Email is required</mat-error>
+            <mat-error *ngIf="email?.errors?.['email']">Please enter a valid email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Alias Name</mat-label>
+            <input matInput formControlName="aliasName">
+            <mat-icon matPrefix>person_outline</mat-icon>
+        </mat-form-field>
+
+        <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error *ngIf="firstName?.errors?.['required']">First name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error *ngIf="lastName?.errors?.['required']">Last name is required</mat-error>
+            </mat-form-field>
+        </div>
+
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Company</mat-label>
+            <input matInput formControlName="company">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Job Title</mat-label>
+            <input matInput formControlName="jobTitle">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Address 1</mat-label>
+            <input matInput formControlName="address1">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Address 2</mat-label>
+            <input matInput formControlName="address2">
+        </mat-form-field>
+
+        <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>State</mat-label>
+                <input matInput formControlName="state">
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Zip Code</mat-label>
+            <input matInput formControlName="zipCode">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button"
+                aria-label="Toggle password visibility">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="password?.errors?.['required']">Password is required</mat-error>
+            <mat-error *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</mat-error>
+        </mat-form-field>
+
+        <!-- Confirm Password -->
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'"
+                required>
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" type="button"
+                aria-label="Toggle password visibility">
+                <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="confirmPassword?.errors?.['required']">Confirm password is required</mat-error>
+            <mat-error *ngIf="signupForm.errors?.['mismatch']">Passwords do not match</mat-error>
+        </mat-form-field>
+
+        <div class="consent-section">
+            <mat-checkbox formControlName="avConsent" required>
+                I consent to Audio / Video recording for the purpose of online notarization.
+            </mat-checkbox>
+        
+            <mat-error *ngIf="avConsent?.invalid && (avConsent?.dirty || avConsent?.touched)">
+                You must provide consent to continue.
+            </mat-error>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" class="login-button"
+            [disabled]="signupForm.invalid || loading">
+            <span *ngIf="!loading">Sign Up</span>
+            <mat-spinner *ngIf="loading" diameter="24"></mat-spinner>
+        </button>
+
+        <div class="signup-link">
+            Already have an account? <a [routerLink]="['/auth/login']">Sign In</a>
+        </div>
+    </form>
+</div>

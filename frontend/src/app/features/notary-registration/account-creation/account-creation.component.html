@@ -1,0 +1,53 @@
+<div class="step-content">
+  <h2 class="mat-headline">Create Your Account</h2>
+  
+  <form [formGroup]="accountForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error>Username must be at least 4 characters</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="altEmail" type="email">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error>Valid email required</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-error>Password must be at least 8 characters</mat-error>
+    </mat-form-field>
+
+    <div class="consent-section">
+      <mat-checkbox formControlName="avConsent">
+        I consent to Audio/Video recording for identity verification and online notarization purposes.
+      </mat-checkbox>
+      <mat-error *ngIf="avConsent?.invalid && (avConsent?.touched || avConsent?.dirty)">
+        Consent is required to continue.
+      </mat-error>
+    </div>
+    
+    <mat-checkbox formControlName="termsAccepted">
+      I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+    </mat-checkbox>
+    <mat-error *ngIf="accountForm.get('termsAccepted')?.invalid">You must accept the terms</mat-error>
+
+    <div class="navigation-buttons">
+      <button mat-stroked-button color="primary" (click)="back.emit()">
+        <mat-icon>arrow_back</mat-icon> Back
+      </button>
+      <button mat-raised-button color="primary" 
+              [disabled]="!accountForm.valid" 
+              (click)="onSubmit()">
+        <mat-icon>check_circle</mat-icon> Complete Registration
+      </button>
+    </div>
+  </form>
+</div>

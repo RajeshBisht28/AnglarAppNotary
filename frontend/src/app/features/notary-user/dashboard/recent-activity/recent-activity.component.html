@@ -1,0 +1,38 @@
+<mat-card class="recent-activity-card">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>history</mat-icon>
+      Recent Activity
+    </mat-card-title>
+    <mat-card-subtitle>Your latest document activity</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="activity-list">
+      <div *ngFor="let document of documents.slice(0, 3)" class="activity-item">
+        <div class="activity-icon" [ngClass]="document.status.toLowerCase()">
+          <mat-icon>{{ getStatusIcon(document.status) }}</mat-icon>
+        </div>
+        <div class="activity-content">
+          <div class="activity-title">{{ document.name }}</div>
+          <div class="activity-meta">
+            <span class="activity-type">{{ document.documentType }}</span>
+            <span class="activity-time">• {{ document.createdDate | date: 'MMM dd' }}</span>
+          </div>
+        </div>
+        <div class="activity-status">
+          <span class="status-chip" [ngClass]="document.status.toLowerCase()">{{ document.status }}</span>
+        </div>
+      </div>
+      <div *ngIf="documents.length === 0" class="no-activity">
+        <mat-icon>inbox</mat-icon>
+        <p>No recent activity</p>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions *ngIf="documents.length > 0">
+    <button mat-button color="primary" (click)="onViewAll()">
+      View All Activity
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

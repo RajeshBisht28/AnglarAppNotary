@@ -1,0 +1,58 @@
+<div class="audit-trail-overlay" *ngIf="isOpen" (click)="close()"></div>
+<div class="audit-trail-panel" [class.open]="isOpen">
+  <div class="panel-header">
+    <h2 class="panel-title">Audit Trail</h2>
+    <button mat-icon-button aria-label="Close audit trail" (click)="close()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="panel-content">
+    <div *ngIf="isLoading" class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading audit trail...</p>
+    </div>
+
+    <div *ngIf="errorMessage && !isLoading" class="error-state">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage && auditLogs.length === 0" class="empty-state">
+      <mat-icon class="empty-icon">history</mat-icon>
+      <p>No audit trail entries yet</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage && auditLogs.length > 0" class="audit-logs">
+      <div class="audit-log-item" *ngFor="let log of auditLogs; let last = last">
+        <div class="log-icon-wrapper">
+          <mat-icon class="log-icon">{{ getEventIcon(log.event) }}</mat-icon>
+        </div>
+
+        <div class="log-details">
+          <div class="log-event">
+            <span class="event-name">{{ log.event | uppercase }}</span>
+            <span class="event-description">{{ log.eventDescription }}</span>
+          </div>
+
+          <div class="log-meta">
+            <div class="meta-item">
+              <span class="meta-label">By:</span>
+              <span class="meta-value">{{ log.eventBy }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">IP:</span>
+              <span class="meta-value">{{ log.ip }}</span>
+            </div>
+          </div>
+
+          <div class="log-timestamp" *ngIf="log.eventAt">
+            {{ log.eventAt | date: 'MMM dd, yyyy HH:mm:ss' }}
+          </div>
+        </div>
+
+        <div *ngIf="!last" class="log-divider"></div>
+      </div>
+    </div>
+  </div>
+</div>

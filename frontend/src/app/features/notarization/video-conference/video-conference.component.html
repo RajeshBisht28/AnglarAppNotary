@@ -1,0 +1,93 @@
+<mat-toolbar color="primary" class="sticky-toolbar" [style.background-color]="userDetail?.branding?.bannerBackgroundColor">
+  <span [style.color]="userDetail?.branding?.bannerTextColor">Video Room</span>
+  <span class="spacer"></span>
+
+  <div class="toolbar-controls">
+    <notary-unverified-id-badge
+      *ngIf="isNotaryUser && !isIdVerified">
+    </notary-unverified-id-badge>
+
+   <!-- Join Button -->
+  <button
+    [style.background-color]="userDetail.branding.primaryButtonsBackgroundColor"
+    [style.color]="userDetail.branding.primaryButtonsTextColor"
+    mat-raised-button
+    color="accent"
+    (click)="joinSession()"
+    *ngIf="!sessionConnected"
+    matTooltip="Join the live notarization session.
+    Ensure your camera, microphone, and internet connection are ready before joining."
+    matTooltipPosition="above">
+     Join
+    </button>
+
+<!-- Leave Button -->
+  <button
+    [style.background-color]="userDetail.branding.primaryButtonsBackgroundColor"
+    [style.color]="userDetail.branding.primaryButtonsTextColor"
+    mat-raised-button
+    color="warn"
+    (click)="leaveSession()"
+    *ngIf="sessionConnected"
+    matTooltip="Exit the notarization session.
+    Leave only after the Notary confirms the notarization is complete.
+    Leaving early may require restarting the session."
+    matTooltipPosition="above"
+    >
+    Leave
+  </button>
+
+<!-- Finish Button -->
+  <button
+    [style.background-color]="userDetail.branding.primaryButtonsBackgroundColor"
+    [style.color]="userDetail.branding.primaryButtonsTextColor"
+    mat-raised-button
+    color="accent"
+    (click)="finishDocument()"
+    matTooltip="Confirm all required signatures and acknowledgments are complete.
+    Click only after you have finished signing as instructed by the Notary."
+    matTooltipPosition="above"
+    >
+    Finish
+  </button>
+
+  </div>
+  </mat-toolbar>
+
+<notary-loading [loaderType]="'spinner'"></notary-loading>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #left mode="side" opened class="left-sidenav">
+    <!-- 🔹 Publisher (current user) -->
+    <div class="video-section" *ngIf="sessionConnected && publisher">
+      <notary-user-video
+        class="video-feed"
+        [streamManager]="publisher"
+        [session]="session"
+        [OV]="OV"
+        [displayName]="getStreamName(publisher)">
+      </notary-user-video>
+    </div>
+
+    <!-- 🔹 Subscribers (others) -->
+    <div class="video-section" *ngIf="subscribers.length">
+      <ng-container *ngFor="let sub of subscribers">
+        <notary-user-video
+          class="video-feed"
+          [streamManager]="sub"
+          [displayName]="getStreamName(sub)">
+        </notary-user-video>
+      </ng-container>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <notary-capture-live-sign
+      [packageId]="packageId"
+      [signerId]="signerId">
+    </notary-capture-live-sign>
+  </mat-sidenav-content>
+
+  <mat-sidenav #right position="end" mode="side" opened class="right-sidenav">
+  </mat-sidenav>
+</mat-sidenav-container>

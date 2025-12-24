@@ -1,0 +1,13 @@
+<div class="controls">
+  <button *ngIf="streamManager instanceof Publisher" mat-icon-button color="accent" (click)="toggleAudio()">
+    <mat-icon>{{ audioEnabled ? 'mic' : 'mic_off' }}</mat-icon>
+  </button>
+
+  <button *ngIf="streamManager instanceof Publisher" mat-icon-button color="accent" (click)="toggleVideo()">
+    <mat-icon>{{ videoEnabled ? 'videocam' : 'videocam_off' }}</mat-icon>
+  </button>
+
+  <button *ngIf="streamManager instanceof Publisher" mat-icon-button color="accent" (click)="toggleScreenShare()">
+    <mat-icon>{{ screenSharing ? 'stop_screen_share' : 'screen_share' }}</mat-icon>
+  </button>
+</div>

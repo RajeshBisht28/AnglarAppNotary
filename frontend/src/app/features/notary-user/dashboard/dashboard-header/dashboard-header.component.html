@@ -1,0 +1,13 @@
+<div class="dashboard-header">
+  <div class="welcome-section">
+    <h1 class="welcome-title">Welcome back, {{ firstName }}!</h1>
+    <p class="welcome-subtitle">Here's what's happening with your documents</p>
+  </div>
+  <div class="header-actions">
+   <button mat-raised-button color="primary" class="notarize-btn" (click)="onNotarizeNow()" [style.background-color]="user.branding.primaryButtonsBackgroundColor"
+      [style.color]="user.branding.primaryButtonsTextColor">
+      <mat-icon>add</mat-icon>
+      Notarize Now
+    </button>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="schedule-form">
+  <div class="form-content">
+    <div class="form-fields">
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Select Date</mat-label>
+        <input matInput [matDatepicker]="datePicker" formControlName="date" [min]="today" required>
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+        <mat-error *ngIf="form.get('date')?.hasError('required')">Date is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="time-field">
+        <mat-label>Select Time</mat-label>
+        <input matInput type="time" formControlName="time" required>
+        <mat-error *ngIf="form.get('time')?.hasError('required')">Time is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-info">
+      <p class="info-text">
+        <mat-icon class="info-icon">info</mat-icon>
+        Your session will be scheduled in your local timezone
+      </p>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button mat-stroked-button type="button" class="cancel-btn">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" class="submit-btn"
+    [style.background-color]="user.branding.primaryButtonsBackgroundColor"
+      [style.color]="user.branding.primaryButtonsTextColor">Schedule Session</button>
+  </div>
+</form>

@@ -1,0 +1,171 @@
+<div class="notary-container">
+  <mat-card>
+    <notary-stepper [steps]="steps" [currentStep]="currentStep"></notary-stepper>
+    
+    <div class="form-container">
+      <div *ngIf="currentStep === 1" class="step-content">
+        <h2 class="mat-headline">User Information</h2>
+        <form [formGroup]="userForm">
+          <mat-form-field appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullName" placeholder="Enter your full name">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="userForm.get('fullName')?.invalid">
+              Please enter a valid name (min 3 characters)
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="fill" style="padding-left: 7px;">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Enter your email">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="userForm.get('email')?.invalid">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="fill">
+            <mat-label>Contact Number</mat-label>
+            <input matInput formControlName="contactNumber" placeholder="Enter your phone number">
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error *ngIf="userForm.get('contactNumber')?.invalid">
+              Please enter a valid phone number (10-15 digits)
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </div>
+      
+      <!-- Step 2: Upload Documents -->
+      <div *ngIf="currentStep === 2" class="step-content">
+        <h2 class="mat-headline">Upload Documents</h2>
+        <div class="upload-area" (click)="fileInput.click()">
+          <input #fileInput type="file" multiple (change)="onFileSelected($event)" style="display: none;">
+          <mat-icon class="upload-icon">cloud_upload</mat-icon>
+          <p>Click to browse or drag and drop files here</p>
+          <p class="hint">Supported formats: PDF, DOC, DOCX, JPG, PNG (Max 10MB each)</p>
+        </div>
+        
+        <div *ngIf="uploadedFiles.length > 0" class="uploaded-files">
+          <h3 class="mat-subheader">Uploaded Documents</h3>
+          <mat-list>
+            <mat-list-item *ngFor="let file of uploadedFiles; let i = index">
+              <mat-icon mat-list-icon>description</mat-icon>
+              <div mat-line>{{ file.name }}</div>
+              <!-- <div mat-line class="file-size">{{ file.size | fileSize }}</div> -->
+              <button mat-icon-button (click)="removeFile(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+      
+      <!-- Step 3: Schedule Notary Session -->
+      <div *ngIf="currentStep === 3" class="step-content">
+        <h2 class="mat-headline">Schedule Notary Session</h2>
+        <form [formGroup]="scheduleForm">
+          <mat-form-field appearance="fill">
+            <mat-label>Select Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" [min]="getTomorrowDate()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="scheduleForm.get('date')?.invalid">
+              Please select a valid date
+            </mat-error>
+          </mat-form-field>
+          
+        <div class="time-slots-container">
+            <h3 class="mat-subheader">Available Time Slots</h3>
+            <mat-chip-listbox>
+                <mat-chip-option *ngFor="let slot of availableTimeSlots"
+                    [selected]="scheduleForm.get('timeSlot')?.value === slot"
+                    (click)="scheduleForm.get('timeSlot')?.setValue(slot)">
+                    {{ slot }}
+                </mat-chip-option>
+            </mat-chip-listbox>
+            <mat-error *ngIf="scheduleForm.get('timeSlot')?.invalid">
+                Please select a time slot
+            </mat-error>
+        </div>
+        </form>
+      </div>
+      
+      <!-- Step 4: Payment Details -->
+      <div *ngIf="currentStep === 4" class="step-content">
+        <h2 class="mat-headline">Payment Details</h2>
+        <form [formGroup]="paymentForm">
+          <mat-form-field appearance="fill">
+            <mat-label>Card Number</mat-label>
+            <input matInput formControlName="cardNumber" placeholder="1234 5678 9012 3456" maxlength="16">
+            <mat-icon matSuffix>credit_card</mat-icon>
+            <mat-error *ngIf="paymentForm.get('cardNumber')?.invalid">
+              Please enter a valid 16-digit card number
+            </mat-error>
+          </mat-form-field>
+          
+          <div class="row">
+            <mat-form-field appearance="fill" class="col">
+              <mat-label>Expiry Date</mat-label>
+              <input matInput formControlName="expiryDate" placeholder="MM/YY" maxlength="5">
+              <mat-error *ngIf="paymentForm.get('expiryDate')?.invalid">
+                Please enter a valid expiry date (MM/YY)
+              </mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill" class="col">
+              <mat-label>CVV</mat-label>
+              <input matInput formControlName="cvv" placeholder="123" maxlength="4">
+              <mat-icon matSuffix>lock</mat-icon>
+              <mat-error *ngIf="paymentForm.get('cvv')?.invalid">
+                Please enter a valid CVV (3-4 digits)
+              </mat-error>
+            </mat-form-field>
+          </div>
+          
+          <mat-form-field appearance="fill">
+            <mat-label>Name on Card</mat-label>
+            <input matInput formControlName="nameOnCard" placeholder="As shown on card">
+            <mat-error *ngIf="paymentForm.get('nameOnCard')?.invalid">
+              Please enter the name on card
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-card class="payment-summary">
+            <mat-card-header>
+              <mat-card-title>Order Summary</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="summary-item">
+                <span>Notary Service Fee</span>
+                <span>$25.00</span>
+              </div>
+              <div class="summary-item">
+                <span>Convenience Fee</span>
+                <span>$2.50</span>
+              </div>
+              <div class="summary-item total">
+                <span>Total</span>
+                <span>$27.50</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </form>
+      </div>
+      
+      <!-- Navigation Buttons -->
+      <div class="navigation-buttons">
+        <button *ngIf="currentStep > 1" mat-stroked-button color="primary" (click)="prevStep()">
+          <mat-icon>arrow_back</mat-icon> Back
+        </button>
+        <button *ngIf="currentStep < steps.length" mat-raised-button color="primary" 
+                [disabled]="!isStepValid(currentStep)" (click)="nextStep()">
+          Next <mat-icon>arrow_forward</mat-icon>
+        </button>
+        <button *ngIf="currentStep === steps.length" mat-raised-button color="primary" 
+                [disabled]="!isStepValid(currentStep)" (click)="submitForm()">
+          <mat-icon>check_circle</mat-icon> Submit
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>

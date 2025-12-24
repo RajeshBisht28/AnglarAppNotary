@@ -1,0 +1,233 @@
+<div class="capture-wrapper">
+  <!-- Selection screen -->
+  <section *ngIf="stage === 'selection'" class="selection-section">
+    <h2 class="selection-title">Identity Document Verification</h2>
+    <p class="selection-subtitle">Please select the region and type of ID document you'll be using for verification</p>
+
+    <form class="selection-form">
+      <!-- Region Selection -->
+      <div class="form-group">
+        <label class="form-label">Region</label>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Select Region</mat-label>
+          <mat-select [(value)]="region">
+            <mat-option *ngFor="let reg of regions" [value]="reg.code">
+              {{ reg.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- ID Type Selection -->
+      <div class="form-group">
+        <label class="form-label">ID Document Type</label>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Select ID Type</mat-label>
+          <mat-select [(value)]="docType">
+            <mat-option *ngFor="let idType of idTypes" [value]="idType.value">
+              {{ idType.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Summary -->
+      <div class="summary-section" *ngIf="region && docType">
+        <p class="summary-text">
+          You selected: <strong>{{ docTitle }}</strong> from <strong>{{ region }}</strong>
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="dialog-actions">
+        <button mat-raised-button color="primary" (click)="onIdTypeSelected(region, docType)" [disabled]="!region || !docType" class="continue-btn">
+          Continue to Capture
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Intro screen -->
+  <section *ngIf="stage === 'intro'" class="instruction-card">
+    <h2 class="instruction-title">Front of {{ docTitle }}</h2>
+    <p class="instruction-subtitle">Take a clear photo of the front of your {{ docTitle }}.</p>
+
+    <div class="doc-illustration" aria-hidden="true">
+      <div class="doc-rect">
+        <div class="doc-avatar"></div>
+        <div class="doc-lines">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" class="primary-cta" (click)="openCamera()">
+      <mat-icon>photo_camera</mat-icon>
+      <span>Open Camera</span>
+    </button>
+  </section>
+
+  <!-- Camera screen -->
+  <section *ngIf="stage === 'camera'" class="camera-stage">
+    <header class="camera-banner">Take a clear photo of the {{ sideTitle.toLowerCase() }} of your {{ docTitle }}.</header>
+
+    <div class="camera-frame">
+      <video #videoEl playsinline muted></video>
+      <div class="overlay">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <div class="frame-hint">{{ sideTitle }} of {{ docTitle }}</div>
+
+        <div class="loading-overlay" *ngIf="isValidating">
+          <mat-progress-spinner mode="indeterminate" diameter="56"></mat-progress-spinner>
+        </div>
+      </div>
+    </div>
+
+    <div class="camera-actions">
+      <button mat-fab color="primary" aria-label="Capture" (click)="captureCurrent()" [disabled]="isValidating">
+        <mat-icon>camera</mat-icon>
+      </button>
+    </div>
+
+    <canvas #canvasEl class="hidden-canvas"></canvas>
+  </section>
+
+  <!-- Review screen -->
+  <section *ngIf="stage === 'review'" class="review-stage">
+    <h2 class="review-title">Review your photos</h2>
+    <p class="review-subtitle">Make sure both sides are clear and readable.</p>
+
+    <div class="preview-grid">
+      <div class="preview-card">
+        <div class="preview-header">
+          <span>Front</span>
+          <button mat-stroked-button color="primary" (click)="retake('front')">
+            <mat-icon>refresh</mat-icon>
+            Retake
+          </button>
+        </div>
+        <img *ngIf="frontPreviewUrl" [src]="frontPreviewUrl" alt="Front preview" />
+      </div>
+
+      <div class="preview-card">
+        <div class="preview-header">
+          <span>Back</span>
+          <button mat-stroked-button color="primary" (click)="retake('back')">
+            <mat-icon>refresh</mat-icon>
+            Retake
+          </button>
+        </div>
+        <img *ngIf="backPreviewUrl" [src]="backPreviewUrl" alt="Back preview" />
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" class="primary-cta" (click)="uploadBoth()">
+      <mat-icon>cloud_upload</mat-icon>
+      <span>Upload</span>
+    </button>
+  </section>
+
+  <!-- Uploading -->
+  <section *ngIf="stage === 'uploading'" class="processing-stage">
+    <h2 class="processing-title">Uploading ID</h2>
+    <p class="processing-subtitle">Please wait while we upload your photos.</p>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </section>
+
+  <!-- Done state -->
+  <section *ngIf="stage === 'done'" class="done-stage">
+    <h2 class="done-title">Success</h2>
+    <p class="done-subtitle">Your {{ docTitle }} has been uploaded successfully.</p>
+  </section>
+
+  <!-- Face Intro screen -->
+  <section *ngIf="stage === 'face-intro'" class="instruction-card">
+    <h2 class="instruction-title">Capture Your Face</h2>
+    <p class="instruction-subtitle">Take a clear photo of your face for verification.</p>
+
+    <div class="face-illustration" aria-hidden="true">
+      <div class="face-circle">
+        <div class="face-eyes">
+          <span class="eye"></span>
+          <span class="eye"></span>
+        </div>
+        <div class="face-mouth"></div>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" class="primary-cta" (click)="openFaceCamera()">
+      <mat-icon>photo_camera</mat-icon>
+      <span>Open Camera</span>
+    </button>
+  </section>
+
+  <!-- Face Camera screen -->
+  <section *ngIf="stage === 'face-camera'" class="camera-stage">
+    <header class="camera-banner">Take a clear photo of your face.</header>
+
+    <div class="camera-frame">
+      <video #faceVideoEl playsinline muted></video>
+      <div class="overlay">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <div class="frame-hint">Position your face in the frame</div>
+
+        <div class="loading-overlay" *ngIf="isValidating">
+          <mat-progress-spinner mode="indeterminate" diameter="56"></mat-progress-spinner>
+        </div>
+      </div>
+    </div>
+
+    <div class="camera-actions">
+      <button mat-fab color="primary" aria-label="Capture" (click)="captureFace()" [disabled]="isValidating">
+        <mat-icon>camera</mat-icon>
+      </button>
+    </div>
+
+    <canvas #faceCanvasEl class="hidden-canvas"></canvas>
+  </section>
+
+  <!-- Face Review screen -->
+  <section *ngIf="stage === 'face-review'" class="review-stage">
+    <h2 class="review-title">Review your face photo</h2>
+    <p class="review-subtitle">Make sure your face is clear and visible.</p>
+
+    <div class="face-preview-card">
+      <div class="preview-header">
+        <span>Face Photo</span>
+        <button mat-stroked-button color="primary" (click)="retakeFace()">
+          <mat-icon>refresh</mat-icon>
+          Retake
+        </button>
+      </div>
+      <img *ngIf="facePreviewUrl" [src]="facePreviewUrl" alt="Face preview" class="face-image" />
+    </div>
+
+    <button mat-raised-button color="primary" class="primary-cta" (click)="uploadFace()">
+      <mat-icon>cloud_upload</mat-icon>
+      <span>Upload</span>
+    </button>
+  </section>
+
+  <!-- Face Uploading -->
+  <section *ngIf="stage === 'face-uploading'" class="processing-stage">
+    <h2 class="processing-title">Uploading Face Photo</h2>
+    <p class="processing-subtitle">Please wait while we verify your face.</p>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </section>
+
+  <!-- Final Success state -->
+  <section *ngIf="stage === 'final-success'" class="final-success-stage">
+    <div class="success-icon">
+      <mat-icon>check_circle</mat-icon>
+    </div>
+    <h2 class="final-success-title">Verification Complete</h2>
+    <p class="final-success-subtitle">Your identity has been successfully verified.</p>
+    <p class="final-success-message" *ngIf="dialogRef">You will be redirected shortly...</p>
+  </section>
+</div>

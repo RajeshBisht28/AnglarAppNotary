@@ -1,0 +1,54 @@
+<div class="selection-container">
+  <h2 class="selection-title">Identity Document Verification</h2>
+  <p class="selection-subtitle">Please select the region and type of ID document you'll be using for verification</p>
+
+  <form [formGroup]="selectionForm" class="selection-form">
+    <!-- Region Selection -->
+    <div class="form-group">
+      <label for="region-select" class="form-label">Region</label>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Select Region</mat-label>
+        <mat-select formControlName="region" id="region-select">
+          <mat-option *ngFor="let region of regions" [value]="region.code">
+            {{ region.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="selectionForm.get('region')?.hasError('required')">
+          Region is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- ID Type Selection -->
+    <div class="form-group">
+      <label for="idtype-select" class="form-label">ID Document Type</label>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Select ID Type</mat-label>
+        <mat-select formControlName="idType" id="idtype-select">
+          <mat-option *ngFor="let idType of idTypes" [value]="idType.value">
+            {{ idType.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="selectionForm.get('idType')?.hasError('required')">
+          ID Type is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary-section" *ngIf="selectionForm.valid">
+      <p class="summary-text">You selected: <strong>{{ selectedIdTypeLabel }}</strong> from <strong>{{ selectedRegionLabel }}</strong></p>
+    </div>
+
+    
+    <!-- Actions -->
+    <div class="dialog-actions">
+      <button mat-stroked-button (click)="onCancel()" class="cancel-btn">
+        Cancel
+      </button>
+      <button mat-raised-button color="primary" (click)="onContinue()" [disabled]="selectionForm.invalid" class="continue-btn">
+        Continue to Capture
+      </button>
+    </div>
+  </form>
+</div>

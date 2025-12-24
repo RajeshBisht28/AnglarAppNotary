@@ -1,0 +1,37 @@
+<aside class="app-sidebar">
+  <nav class="side-nav">
+    <a [routerLink]="'/notary-user/dashboard'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="side-link">
+      <mat-icon [style.color]="user.branding?.bannerBackgroundColor">dashboard</mat-icon>
+      <span class="side-label">Dashboard</span>
+    </a>
+
+    <button type="button" class="side-link toggle" (click)="toggleDocs()" [attr.aria-expanded]="isDocsOpen">
+      <mat-icon [style.color]="user.branding?.bannerBackgroundColor">description</mat-icon>
+      <span class="side-label">Documents</span>
+      <mat-icon class="chev"  [style.color]="user.branding?.bannerBackgroundColor" [class.open]="isDocsOpen">expand_more</mat-icon>
+    </button>
+    <div class="child-links" *ngIf="isDocsOpen">
+      <a [routerLink]="'/notary-user/documents/inbox'" routerLinkActive="active" class="child-link">Inbox</a>
+      <a [routerLink]="'/notary-user/documents/signed'" routerLinkActive="active" class="child-link">Signed</a>
+      <a [routerLink]="'/notary-user/documents/pending'" routerLinkActive="active" class="child-link">Pending</a>
+      <a [routerLink]="'/notary-user/documents/draft'" routerLinkActive="active" class="child-link">Draft</a>
+    </div>
+
+    <a [routerLink]="'/notary-user/clients'" routerLinkActive="active" class="side-link">
+      <mat-icon  [style.color]="user.branding?.bannerBackgroundColor">groups</mat-icon>
+      <span class="side-label">Clients</span>
+    </a>
+    <a [routerLink]="'/notary-user/appointments'" routerLinkActive="active" class="side-link">
+      <mat-icon  [style.color]="user.branding?.bannerBackgroundColor">event</mat-icon>
+      <span class="side-label">Appointments</span>
+    </a>
+    <a [routerLink]="'/notary-user/journal'" routerLinkActive="active" class="side-link">
+      <mat-icon  [style.color]="user.branding?.bannerBackgroundColor">description</mat-icon>
+      <span class="side-label">Journal</span>
+    </a>
+    <a [routerLink]="'/notary-user/billing'" routerLinkActive="active" class="side-link">
+      <mat-icon  [style.color]="user.branding?.bannerBackgroundColor">credit_card</mat-icon>
+      <span class="side-label">Billing</span>
+    </a>
+  </nav>
+</aside>

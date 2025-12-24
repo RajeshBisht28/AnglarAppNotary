@@ -1,0 +1,19 @@
+<div class="video-box">
+  <video
+    #videoElement
+    autoplay
+    playsinline
+    [attr.id]="streamManager?.stream?.streamId">
+  </video>
+
+  <!-- 👇 Name overlay -->
+  <div class="video-name" *ngIf="displayName">
+    {{ displayName }}
+  </div>
+
+  <notary-video-control
+    [streamManager]="streamManager"
+    [session]="session"
+    [OV]="OV">
+  </notary-video-control>
+</div>

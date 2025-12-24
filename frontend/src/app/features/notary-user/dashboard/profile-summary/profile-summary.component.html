@@ -1,0 +1,31 @@
+<mat-card class="profile-summary-card">
+  <mat-card-content>
+    <div class="profile-summary">
+      <div class="profile-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div class="profile-info">
+        <h3 class="profile-name">{{ profileData.name }}</h3>
+        <div class="profile-details">
+          <span class="profile-email">{{ profileData.email }}</span>
+          <span class="profile-phone">{{ profileData.phone }}</span>
+          <span class="profile-member-since">Member since {{ profileData.memberSince }}</span>
+        </div>
+        <div class="profile-verified">
+          <mat-icon class="verified-icon">verified</mat-icon>
+          <span class="verified-text">Verified User</span>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="stat-number">{{ profileData.documentsCount }}</div>
+          <div class="stat-label">Documents</div>
+        </div>
+        <div class="profile-stat">
+          <div class="stat-number">{{ profileData.completedNotarizations }}</div>
+          <div class="stat-label">Completed Notarizations</div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

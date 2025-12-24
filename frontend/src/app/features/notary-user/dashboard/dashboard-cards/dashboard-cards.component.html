@@ -1,0 +1,13 @@
+<div class="cards-row">
+  <mat-card class="metric-card" *ngFor="let c of cards">
+    <div class="metric-content">
+      <div class="metric-icon">
+        <mat-icon>{{ c.icon }}</mat-icon>
+      </div>
+      <div class="metric-info">
+        <div class="metric-value">{{ c.value }}</div>
+        <div class="metric-title">{{ c.title }}</div>
+      </div>
+    </div>
+  </mat-card>
+</div>

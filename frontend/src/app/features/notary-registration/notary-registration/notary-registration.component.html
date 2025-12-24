@@ -1,0 +1,48 @@
+<div class="notary-registration-wrapper">
+  <notary-toolbar 
+    [title]="'Notary Registration'"
+    [showBackButton]="currentStep > 1"
+    [showProgress]="true"
+    [progressValue]="(currentStep / steps.length) * 100"
+    (back)="prevStep()">
+  </notary-toolbar>
+
+  <main class="notary-registration-content">
+    <mat-card class="registration-card">
+      <notary-stepper [steps]="steps" [currentStep]="currentStep"></notary-stepper>
+      
+      <div class="form-container">
+        <notary-info
+          *ngIf="currentStep === 1"
+          [notaryData]="registrationData.notaryInfo"
+          (complete)="onStepComplete($event, 1)">
+        </notary-info>
+        
+        <notary-profile-certificates 
+          *ngIf="currentStep === 2"
+          [profileData]="registrationData.profileData"
+          (complete)="onStepComplete($event, 2)"
+          (back)="prevStep()">
+        </notary-profile-certificates>
+        
+        <notary-digital-seal
+          *ngIf="currentStep === 3"
+          [sealData]="registrationData.sealData"
+          (complete)="onStepComplete($event, 3)"
+          (back)="prevStep()">
+        </notary-digital-seal>
+        
+        <notary-account-creation
+          *ngIf="currentStep === 4"
+          [accountData]="registrationData.accountData"
+          (complete)="onStepComplete($event, 4)"
+          (back)="prevStep()">
+        </notary-account-creation>
+
+        <notary-signup-success *ngIf="currentStep === 5">
+
+        </notary-signup-success>
+      </div>
+    </mat-card>
+  </main>
+</div>

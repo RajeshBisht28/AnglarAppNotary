@@ -1,0 +1,56 @@
+<div class="reschedule-dialog">
+  <h2 mat-dialog-title class="dialog-title">Reschedule Session</h2>
+
+  <mat-dialog-content class="dialog-content">
+    <div class="package-info">
+      <div class="info-row">
+        <span class="info-label">Package:</span>
+        <span class="info-value">{{ data.packageName }}</span>
+      </div>
+      <ng-container *ngIf="data.currentDateTime">
+        <div class="info-row">
+          <span class="info-label">Current Scheduled:</span>
+          <span class="info-value">{{ data.currentDateTime }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <form [formGroup]="form" class="form-content">
+      <mat-form-field appearance="outline" class="date-field">
+        <mat-label>Select New Date</mat-label>
+        <input matInput [matDatepicker]="datePicker" formControlName="date" [min]="today" required>
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+        <mat-error *ngIf="form.get('date')?.hasError('required')">Date is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="time-field">
+        <mat-label>Select New Time</mat-label>
+        <input matInput type="time" formControlName="time" required>
+        <mat-error *ngIf="form.get('time')?.hasError('required')">Time is required</mat-error>
+      </mat-form-field>
+
+      <div class="form-info">
+        <mat-icon class="info-icon">info</mat-icon>
+        <p class="info-text">The session will be rescheduled in your local timezone</p>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-stroked-button (click)="close()" [disabled]="isSubmitting">Cancel</button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="submit()"
+      [disabled]="isSubmitting || form.invalid"
+      [style.background-color]="user?.branding?.primaryButtonsBackgroundColor"
+      [style.color]="user?.branding?.primaryButtonsTextColor">
+      <span *ngIf="!isSubmitting">Reschedule</span>
+      <span *ngIf="isSubmitting">
+        <mat-spinner diameter="20" class="inline-spinner"></mat-spinner>
+        Rescheduling...
+      </span>
+    </button>
+  </mat-dialog-actions>
+</div>

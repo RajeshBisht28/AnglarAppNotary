@@ -1,0 +1,48 @@
+.step-content {
+  .mat-headline {
+    margin-bottom: 1.5rem;
+  }
+
+  .upload-section {
+    margin-bottom: 2rem;
+    
+    .mat-subheader {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    
+    .upload-area {
+      border: 2px dashed #e0e0e0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        border-color: #2196F3;
+        background-color: rgba(33, 150, 243, 0.05);
+      }
+      
+      .upload-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        color: #757575;
+        margin-bottom: 0.5rem;
+      }
+      
+      p {
+        margin: 0;
+        color: #555;
+      }
+    }
+  }
+
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+}

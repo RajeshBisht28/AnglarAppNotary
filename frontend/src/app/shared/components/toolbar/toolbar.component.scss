@@ -1,0 +1,133 @@
+
+.notary-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 64px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #f0f0f0;
+  
+  .toolbar-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .company-logo {
+    height: 32px;
+    margin-right: 16px;
+  }
+  
+  .back-button {
+    margin-right: 16px;
+    color: #5f6368;
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+  
+  .toolbar-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    color: #3c4043;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    
+    ::ng-deep .mat-progress-bar-fill::after {
+      background-color: #1a73e8;
+    }
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f1f3f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      background: #e8f0fe;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    
+    .avatar-icon {
+      color: #5f6368;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.user-menu {
+  margin-top: 8px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  
+  .mat-menu-item {
+    height: 40px;
+    line-height: 40px;
+    
+    mat-icon {
+      margin-right: 12px;
+      color: #5f6368;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .notary-toolbar {
+    height: 56px;
+    
+    .toolbar-content {
+      padding: 0 16px;
+    }
+    
+    .company-logo {
+      height: 28px;
+      margin-right: 12px;
+    }
+    
+    .toolbar-title {
+      font-size: 16px;
+    }
+    
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      
+      .avatar-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}

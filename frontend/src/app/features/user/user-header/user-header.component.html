@@ -1,0 +1,36 @@
+<header class="user-header" [style.background-color]="user.branding.bannerBackgroundColor">
+  <div class="brand-area">
+    <img [src]="configData?.mainLogo 
+    ? 'data:image/png;base64,' + configData?.mainLogo 
+    : 'assets/tri-color.png'" alt="Logo" class="brand-logo" />
+
+    <span class="brand-name" [style.color]="user.branding.bannerTextColor">
+      {{user.branding?.platformName}}
+    </span>
+  </div>
+
+  <div class="header-actions">
+    <button mat-icon-button matBadgeColor="accent" aria-label="Notifications">
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item [routerLink]="['/user/profile']">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/user/settings']">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</header>

@@ -1,0 +1,263 @@
+<mat-card class="branding-container">
+  <div class="branding-header">
+    <h2>Branding Settings</h2>
+  </div>
+
+  <!-- Account Selection Section -->
+  <div class="account-selection-section" *ngIf="!selectedAccountId">
+    <div class="accounts-list">
+      <p class="accounts-label">Select an Account to Configure Branding</p>
+      <notary-loading [loaderType]="'spinner'" *ngIf="accountsLoading"></notary-loading>
+      <div class="accounts-grid" *ngIf="!accountsLoading">
+        <button
+          *ngFor="let account of accounts"
+          (click)="onAccountSelect(account.id)"
+          class="account-card"
+          mat-raised-button
+        >
+          <mat-icon>business</mat-icon>
+          <span>{{ account.name }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branding Form Section -->
+  <div class="branding-content" *ngIf="selectedAccountId">
+    <!-- Account Change Button -->
+    <div class="account-header">
+      <button mat-icon-button (click)="selectedAccountId = null" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="current-account">{{ getCurrentAccountName() }}</span>
+    </div>
+
+    <form [formGroup]="brandingForm" class="branding-form">
+      <!-- Platform Name Section -->
+      <div class="form-row">
+        <div class="form-group platform-name-group">
+          <label class="form-label" for="platformName">
+            <mat-icon>business</mat-icon>
+            Platform Name
+          </label>
+          <input
+            id="platformName"
+            type="text"
+            formControlName="platformName"
+            placeholder="Enter company or brand name"
+            class="platform-name-input"
+            matInput
+          />
+          <mat-error *ngIf="brandingForm.get('platformName')?.hasError('required')">
+            Platform Name is required
+          </mat-error>
+        </div>
+      </div>
+
+      <!-- Logo Section -->
+      <div class="form-row">
+        <div class="form-group logo-group">
+          <label class="form-label">
+            <mat-icon>image</mat-icon>
+            Logo
+          </label>
+          <div class="logo-upload-container">
+            <input
+              type="file"
+              #logoInput
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              style="display: none"
+            />
+            <button
+              type="button"
+              mat-stroked-button
+              (click)="logoInput.click()"
+              class="upload-button"
+            >
+              <mat-icon>upload</mat-icon>
+              Upload
+            </button>
+            <div *ngIf="brandingForm.get('mainLogo')?.value" class="logo-preview">
+              <img [src]="'data:image/png;base64,' + brandingForm.get('mainLogo')?.value" alt="Logo" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Color Groups -->
+      <div class="color-groups-wrapper">
+        <!-- Banner Colors -->
+        <div class="color-group">
+          <h4 class="color-group-title">
+            <mat-icon>palette</mat-icon>
+            Banner
+          </h4>
+          <div class="color-inputs-row">
+            <div class="color-field">
+              <label>Background</label>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  formControlName="bannerBackgroundColor"
+                  class="color-picker"
+                />
+                <input
+                  type="text"
+                  formControlName="bannerBackgroundColor"
+                  class="color-text-input"
+                />
+              </div>
+            </div>
+            <div class="color-field">
+              <label>Text</label>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  formControlName="bannerTextColor"
+                  class="color-picker"
+                />
+                <input
+                  type="text"
+                  formControlName="bannerTextColor"
+                  class="color-text-input"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Button Colors -->
+        <div class="color-group">
+          <h4 class="color-group-title">
+            <mat-icon>touch_app</mat-icon>
+            Action Button
+          </h4>
+          <div class="color-inputs-row">
+            <div class="color-field">
+              <label>Background</label>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  formControlName="actionButtonBackgroundColor"
+                  class="color-picker"
+                />
+                <input
+                  type="text"
+                  formControlName="actionButtonBackgroundColor"
+                  class="color-text-input"
+                />
+              </div>
+            </div>
+            <div class="color-field">
+              <label>Text</label>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  formControlName="actionButtonTextColor"
+                  class="color-picker"
+                />
+                <input
+                  type="text"
+                  formControlName="actionButtonTextColor"
+                  class="color-text-input"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary Button Colors -->
+        <div class="color-group">
+          <h4 class="color-group-title">
+            <mat-icon>check_circle</mat-icon>
+            Primary Button
+          </h4>
+          <div class="color-inputs-row">
+            <div class="color-field">
+              <label>Background</label>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  formControlName="primaryButtonsBackgroundColor"
+                  class="color-picker"
+                />
+                <input
+                  type="text"
+                  formControlName="primaryButtonsBackgroundColor"
+                  class="color-text-input"
+                />
+              </div>
+            </div>
+            <div class="color-field">
+              <label>Text</label>
+              <div class="color-input-wrapper">
+                <input
+                  type="color"
+                  formControlName="primaryButtonsTextColor"
+                  class="color-picker"
+                />
+                <input
+                  type="text"
+                  formControlName="primaryButtonsTextColor"
+                  class="color-text-input"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-section" *ngIf="previewBranding">
+        <h4 class="preview-title">Preview</h4>
+        <div
+          class="preview-container"
+          [style.--banner-bg]="previewBranding.bannerBackgroundColor"
+          [style.--banner-text]="previewBranding.bannerTextColor"
+          [style.--action-btn-bg]="previewBranding.actionButtonBackgroundColor"
+          [style.--action-btn-text]="previewBranding.actionButtonTextColor"
+          [style.--primary-btn-bg]="previewBranding.primaryButtonsBackgroundColor"
+          [style.--primary-btn-text]="previewBranding.primaryButtonsTextColor"
+        >
+          <div class="preview-banner">
+            <div class="logo-placeholder" *ngIf="previewBranding.mainLogo">
+              <img [src]="'data:image/png;base64,' + previewBranding.mainLogo" alt="Logo" />
+            </div>
+            <h5>Sample Title</h5>
+          </div>
+          <div class="preview-buttons">
+            <button class="preview-action-btn">Action</button>
+            <button class="preview-primary-btn">Primary</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="saveBrandingConfig()"
+          [disabled]="isSaving"
+          class="save-button"
+        >
+          <mat-icon *ngIf="!isSaving">save</mat-icon>
+          {{ isSaving ? 'Saving...' : 'Save' }}
+        </button>
+        <button
+          type="button"
+          mat-stroked-button
+          (click)="resetForm()"
+          [disabled]="isSaving"
+        >
+          <mat-icon>refresh</mat-icon>
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+</mat-card>
+
+<notary-loading [loaderType]="'spinner'" *ngIf="isLoading"></notary-loading>

@@ -1,0 +1,20 @@
+<header class="user-header"> 
+  <div class="brand-area">
+    <img src="assets/doccentral-logo.png" alt="Logo" class="brand-logo" />
+    <span class="brand-name">Admin</span>
+  </div>
+
+  <div class="header-actions">
+
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="User menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</header>

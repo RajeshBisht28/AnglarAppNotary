@@ -1,0 +1,90 @@
+<main class="appointments-container mat-elevation-z1">
+  <div class="header">
+    <div>
+      <h1>Scheduled Appointments</h1>
+      <p>Manage your client packages and sessions here.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- Left Side Table -->
+    <div class="table-section">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Appointments for {{ selectedDate | date: 'MMMM d, yyyy' }}
+          </mat-card-title>
+        </mat-card-header>
+
+        <div class="mat-elevation-z2">
+          <mat-table [dataSource]="dataSource" matSort>
+            <!-- Package Name -->
+            <ng-container matColumnDef="lnPackageName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Package Name</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{ row.lnPackageName }}</mat-cell>
+            </ng-container>
+
+            <!-- Description -->
+            <ng-container matColumnDef="lnPackageDesc">
+              <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{ row.lnPackageDesc }}</mat-cell>
+            </ng-container>
+
+            <!-- Status -->
+            <ng-container matColumnDef="lnPackageStatus">
+              <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span [ngClass]="{
+                    'status-inprogress': row.lnPackageStatus === 'In Progress',
+                    'status-completed': row.lnPackageStatus === 'Completed'
+                  }" class="status-chip">
+                  {{ row.scheduledStatus }}
+                </span>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Schedule Date -->
+            <ng-container matColumnDef="scheduleDateTime">
+              <mat-header-cell *matHeaderCellDef>Scheduled Date</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{ row?.formattedScheduledDateTime}}</mat-cell>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let row" class="actions">
+                <button matTooltip="Join Appointment" mat-icon-button (click)="joinAppointment(row)">
+                  <mat-icon>video_call</mat-icon>
+                </button>
+                <button matTooltip="Reschedule Appointment" mat-icon-button (click)="onRescheduleAppointment(row)">
+                  <mat-icon>edit_calendar</mat-icon>
+                </button>
+                <button matTooltip="Cancel Appointment" mat-icon-button (click)="onCancelAppointment(row)">
+                  <mat-icon>cancel_presentation</mat-icon>
+                </button>                
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+        </div>
+
+        <mat-paginator [pageSize]="5"></mat-paginator>
+      </mat-card>
+    </div>
+
+    <!-- Calendar Section -->
+    <div class="calendar-section">
+      <mat-card>
+        <mat-calendar 
+        [(selected)]="selectedDate" 
+        (selectedChange)="onDateChange($event)"
+        [dateFilter]="dateFilter"
+        [dateClass]="dateClass">
+        </mat-calendar>
+
+      </mat-card>
+    </div>
+  </div>
+</main>

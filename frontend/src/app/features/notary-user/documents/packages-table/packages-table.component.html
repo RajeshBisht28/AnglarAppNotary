@@ -1,0 +1,96 @@
+<mat-card class="doc-card">
+  <div class="toolbar-row">
+    <div class="left-controls">
+      <h2 class="doc-title">{{ title }}</h2>
+    </div>
+    <div class="right-controls">
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input type="text" [ngModel]="query" (ngModelChange)="applyFilter($event)" placeholder="Search packages..." />
+      </div>
+    </div>
+  </div>
+
+  <div class="table modern-table">
+    <div class="table-scroll">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let p">
+            <div class="cell-name">
+              <!-- <mat-icon>description</mat-icon> -->
+              <div class="name-wrap">
+                <div class="file-name">{{ p.lnPackageName }}</div>
+                <!-- <div class="subtext">#{{ p.id }}</div> -->
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let p">
+            <span class="muted">{{ p.lnPackageDesc }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let p">
+            <span class="status-chip" [ngClass]="(p.lnPackageStatus || '').toLowerCase()">{{ p.lnPackageStatus }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-col">Actions</th>
+          <td mat-cell *matCellDef="let p" class="actions-col">
+            <button mat-icon-button [matMenuTriggerFor]="rowMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #rowMenu="matMenu">
+              <!-- <button mat-menu-item *ngFor="let a of actionsFor(p)" (click)="onAction(a.label, p)">
+                <mat-icon>{{ a.icon }}</mat-icon>
+                <span>{{ a.label }}</span>
+              </button> -->
+              <button mat-menu-item (click)="onContinue(p)" *ngIf="p.lnPackageStatus === 'Created'">
+                  <mat-icon>arrow_circle_right</mat-icon>
+                  <span>continue</span>
+                </button>
+              <button mat-menu-item (click)="onJournal(p)">
+                <mat-icon>description</mat-icon>
+                <span>Details</span>
+              </button>
+              <button mat-menu-item (click)="onAuditTrail(p)">
+                <mat-icon>history</mat-icon>
+                <span>Audit Trail</span>
+              </button>
+              <button mat-menu-item (click)="onDownload(p)">
+                  <mat-icon>download</mat-icon>
+                  <span>Download</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+  </div>
+</mat-card>
+
+<app-audit-trail-panel
+  [packageId]="selectedPackageId"
+  [isOpen]="isAuditTrailOpen"
+  (closePanel)="closeAuditTrail()">
+</app-audit-trail-panel>
+
+<app-journal-sidebar
+  [packageId]="journalPackageId"
+  [isOpen]="isJournalSidebarOpen"
+  (closePanel)="closeJournalSidebar()">
+</app-journal-sidebar>
+
+<notary-loading [loaderType]="'spinner'"></notary-loading>

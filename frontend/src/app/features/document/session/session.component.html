@@ -1,0 +1,35 @@
+<div class="session-wrapper">
+  <h2 class="section-title">Schedule Your Session</h2>
+
+  <ng-container [ngSwitch]="mode">
+    <ng-container *ngSwitchCase="'select'">
+      <session-schedule-options (choose)="onChoose($event)"></session-schedule-options>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'later'">
+      <notary-selector
+        *ngIf="sessionType && !notarySaved"
+        [sessionType]="sessionType"
+        [packageId]="packageId!"
+        (notarySaved)="onNotarySaved($event)">
+      </notary-selector>
+      <div *ngIf="notarySaved" style="padding: 16px;">
+        <app-calendly-iframe [packageId]="packageId!"></app-calendly-iframe>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'instant'">
+      <notary-selector
+        *ngIf="sessionType && !notarySaved"
+        [sessionType]="sessionType"
+        [packageId]="packageId!"
+        (notarySaved)="onNotarySaved($event)">
+      </notary-selector>
+      <notary-video-conference
+        *ngIf="notarySaved"
+        [packageId]="packageId!"
+        [signerId]="signerId">
+      </notary-video-conference>
+    </ng-container>
+  </ng-container>
+</div>

@@ -1,0 +1,46 @@
+.thumbs-wrapper {
+    display: grid;
+    gap: 8px;
+    padding: 8px;
+}
+
+.thumb-card {
+    display: grid;
+    gap: 6px;
+}
+
+.doc-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .6);
+    padding: 0 4px;
+}
+
+.thumb-list {
+    display: grid;
+    gap: 8px;
+}
+
+.thumb-item {
+    display: grid;
+    gap: 4px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+}
+
+.thumb-item img {
+    width: 100%;
+    aspect-ratio: 4/4;
+    //object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .18);
+}
+
+.thumb-caption {
+    font-size: 11px;
+    color: rgba(0, 0, 0, .6);
+    padding-left: 2px;
+}

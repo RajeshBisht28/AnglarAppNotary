@@ -1,0 +1,22 @@
+@import '../login/login.component.scss'; // reuse login styles
+
+.form-row {
+  display: flex;
+  gap: 16px;
+
+  .form-field {
+    flex: 1;
+  }
+
+  .consent-section {
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  mat-checkbox {
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: normal; // allow long text to wrap
+  }
+}
+
+}

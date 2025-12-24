@@ -1,0 +1,8 @@
+<div cdkDrag cdkDragBoundary=".overlay-div" #dragField (cdkDragEnded)="dragEnded()"
+ >
+  [{{ field?.signerName }}] {{ field?.standardTagName }}
+
+  <button mat-icon-button aria-label="Delete" (click)="remove()">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,107 @@
+.profile-summary-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  mat-card-content {
+    padding: 24px !important;
+  }
+
+  .profile-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+
+    .profile-avatar {
+      flex-shrink: 0;
+
+      mat-icon {
+        font-size: 4rem;
+        width: 4rem;
+        height: 4rem;
+        color: #667eea;
+      }
+    }
+
+    .profile-info {
+      flex: 1;
+
+      .profile-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a202c;
+        margin: 0 0 8px 0;
+      }
+
+      .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 12px;
+
+        .profile-email,
+        .profile-phone,
+        .profile-member-since {
+          font-size: 0.875rem;
+          color: #4a5568;
+        }
+      }
+
+      .profile-verified {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .verified-icon {
+          font-size: 1rem;
+          width: 1rem;
+          height: 1rem;
+          color: #48bb78;
+        }
+
+        .verified-text {
+          font-size: 0.875rem;
+          color: #48bb78;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .profile-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .profile-stat {
+        text-align: center;
+
+        .stat-number {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #667eea;
+          margin-bottom: 4px;
+        }
+
+        .stat-label {
+          font-size: 0.75rem;
+          color: #718096;
+          font-weight: 500;
+          line-height: 1.2;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-summary {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+
+    .profile-stats {
+      flex-direction: row;
+      justify-content: center;
+      gap: 24px;
+    }
+  }
+}

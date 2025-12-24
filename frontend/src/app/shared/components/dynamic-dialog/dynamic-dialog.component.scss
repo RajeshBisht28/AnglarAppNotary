@@ -1,0 +1,48 @@
+.dialog-content {
+  padding-top: 8px;
+}
+
+.dialog-message {
+  margin: 0 0 12px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.dynamic-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .dynamic-form {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+}
+
+.full-checkbox {
+  grid-column: span 2 !important;   
+
+  .mat-checkbox-layout {
+    align-items: flex-start;       
+  }
+
+  .mat-checkbox-label {
+    white-space: normal !important;  
+    line-height: 1.4;       
+    display: block;      
+  }
+}
+
+
+
+
+

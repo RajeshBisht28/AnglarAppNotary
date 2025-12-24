@@ -1,0 +1,56 @@
+<div class="login-card">
+  <div class="login-header">
+    <img src="assets/doccentral-logo.png" alt="Leaflet" class="logo">
+    <h1>Welcome to eNotary</h1>
+    <p class="subtitle">Sign in to your account</p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required>
+      <mat-icon matPrefix>mail_outline</mat-icon>
+      <mat-error *ngIf="email?.errors?.['required']">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="email?.errors?.['email']">
+        Please enter a valid email
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" required>
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button"
+        aria-label="Toggle password visibility">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="password?.errors?.['required']">
+        Password is required
+      </mat-error>
+      <mat-error *ngIf="password?.errors?.['minlength']">
+        Password must be at least 6 characters
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-options">
+      <mat-checkbox color="primary" formControlName="remember">
+        Remember me
+      </mat-checkbox>
+      <a routerLink="/auth/forgot-password" class="forgot-link">
+        Forgot password?
+      </a>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" class="login-button"
+      [disabled]="loginForm.invalid || loading">
+      <span *ngIf="!loading">Sign In</span>
+      <mat-spinner *ngIf="loading" diameter="24"></mat-spinner>
+    </button>
+
+    <div class="signup-link">
+      Don't have an account? <a [routerLink]="['/auth/signup']">Sign up</a>
+    </div>
+  </form>
+</div>

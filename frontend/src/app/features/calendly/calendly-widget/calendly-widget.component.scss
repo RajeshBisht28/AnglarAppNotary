@@ -1,0 +1,16 @@
+.inline-container {
+  min-width: 320px;
+  height: 700px;
+  margin-top: 16px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.error {
+  color: red;
+  padding: 12px 0;
+}

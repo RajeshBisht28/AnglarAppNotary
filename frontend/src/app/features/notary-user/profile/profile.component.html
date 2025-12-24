@@ -1,0 +1,290 @@
+<div class="profile-page">
+    <form [formGroup]="form" class="profile-form">
+
+        <!-- HEADER -->
+        <div class="page-header">
+            <h1>Notary Profile</h1>
+            <p>Maintain your official notary information and documents</p>
+        </div>
+
+        <mat-card class="section-card avatar-card">
+            <div class="avatar-wrapper">
+                <div class="avatar">
+                    <img *ngIf="avatarPreview()" [src]="avatarPreview()" />
+                    <span *ngIf="!avatarPreview()">+</span>
+                </div>
+
+                <div class="avatar-info">
+                    <h3>Profile Photo</h3>
+                    <p>JPG or PNG · Max 2MB</p>
+
+                    <label class="upload-btn">
+                        <input type="file" hidden accept="image/*" (change)="onAvatarSelected($event)" />
+                        Change Photo
+                    </label>
+                </div>
+            </div>
+        </mat-card>
+
+
+        <!-- BASIC INFO -->
+        <mat-card class="section-card">
+            <h2 class="section-title">Basic Information</h2>
+            <div class="grid-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Alias Name</mat-label>
+                    <input matInput formControlName="alisName">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="firstName">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastName">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                </mat-form-field>
+            </div>
+
+            <div class="grid-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Company</mat-label>
+                    <input matInput formControlName="company">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Job Title</mat-label>
+                    <input matInput formControlName="jobTitle">
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <!-- ADDRESS -->
+        <mat-card class="section-card">
+            <h2 class="section-title">Address</h2>
+            <div class="grid-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput formControlName="address1">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Address Line 2</mat-label>
+                    <input matInput formControlName="address2">
+                </mat-form-field>
+            </div>
+
+            <div class="grid-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>State</mat-label>
+                    <input matInput formControlName="state">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput formControlName="zipcode">
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <!-- CONTACT -->
+        <mat-card class="section-card">
+            <h2 class="section-title">Contact Details</h2>
+            <div class="grid-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Phone</mat-label>
+                    <input matInput formControlName="phone">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Fax</mat-label>
+                    <input matInput formControlName="fax">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Alternate Email</mat-label>
+                    <input matInput formControlName="altEmail">
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <!-- COMMISSION -->
+        <mat-card class="section-card">
+            <h2 class="section-title">Notary Commission</h2>
+            <div class="grid-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Commission Number</mat-label>
+                    <input matInput formControlName="commissionNumber">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Expiry Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="commissionExpiryDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Jurisdiction</mat-label>
+                    <input matInput formControlName="jurisdiction">
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <!-- DOCUMENTS -->
+        <mat-card class="section-card">
+            <h2 class="section-title">Documents</h2>
+
+            <div class="doc-grid">
+
+                <!-- Photo ID -->
+                <div class="doc-box">
+                    <h4>Photo ID</h4>
+                    <p>JPG / PNG / PDF · Max 5MB</p>
+
+                    <label class="upload-btn">
+                        <input type="file" hidden (change)="onAvatarSelected($event)" />
+                        Upload
+                    </label>
+                </div>
+
+                <!-- Commission Certificate -->
+
+                <div class="doc-box">
+                    <h4>Commission Certificate</h4>
+
+                    <label class="upload-btn">
+                        <input type="file" hidden (change)="onDocSelected($event, 'commissionCertificate')" />
+                        Upload
+                    </label>
+
+                    <small *ngIf="docPreviews().commissionCertificate">
+                        ✔ File attached
+                        <button mat-button color="warn" (click)="removeFile('commissionCertificate')">
+                            Remove
+                        </button>
+                    </small>
+
+                    <div class="pdf-preview" *ngIf="docPreviews().commissionCertificate"
+                        (click)="openPdfPreview(docPreviews().commissionCertificate!)" matTooltip="Preview PDF">
+                        <mat-icon color="primary">picture_as_pdf</mat-icon>
+                        <span>Preview</span>
+                    </div>
+                </div>
+
+                <!-- Additional Certificate -->
+                <div class="doc-box">
+                    <h4>Additional Certificate</h4>
+
+                    <label class="upload-btn">
+                        <input type="file" hidden (change)="onDocSelected($event, 'additionalCertificate')" />
+                        Upload
+                    </label>
+
+                    <small *ngIf="docPreviews().additionalCertificate">
+                        ✔ File attached
+                        <button mat-button color="warn" (click)="removeFile('additionalCertificate')">
+                            Remove
+                        </button>
+                    </small>
+
+                    <div class="pdf-preview" *ngIf="docPreviews().additionalCertificate"
+                        (click)="openPdfPreview(docPreviews().additionalCertificate!)" matTooltip="Preview PDF">
+                        <mat-icon color="primary">picture_as_pdf</mat-icon>
+                        <span>Preview</span>
+                    </div>
+                </div>
+
+            </div>
+        </mat-card>
+
+
+        <!-- SCHEDULING -->
+        <mat-card class="section-card">
+            <h2 class="section-title">Scheduling</h2>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Calendly Public Profile URL</mat-label>
+                <input matInput formControlName="calendlyPublicSessionUrl">
+                <button mat-icon-button matSuffix matTooltip="Configure your Calendly meeting types" type="button"
+                    aria-label="Configure Calendly" (click)="openCalendlyConfig()">
+                    <mat-icon>event</mat-icon>
+                </button>
+            </mat-form-field>
+        </mat-card>
+
+        <!-- SEALS -->
+        <mat-card class="section-card">
+            <h2 class="section-title">Notary Seals</h2>
+
+            <div formArrayName="seals">
+                <div *ngFor="let seal of sealsArray.controls; let i = index" [formGroupName]="i" class="seal-card">
+                    <div class="seal-grid">
+
+                        <!-- SEAL IMAGE -->
+                        <div class="seal-preview">
+                            <img [src]="sealImage(seal.get('sealBase64Content')?.value)" alt="Seal" />
+                        </div>
+
+                        <!-- SEAL FIELDS -->
+                        <div class="seal-fields">
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Seal Style</mat-label>
+                                <mat-select formControlName="sealStyle">
+                                    <mat-option value="circle">Circle</mat-option>
+                                    <mat-option value="square">Square</mat-option>
+                                    <mat-option value="rectangle">Rectangle</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <!-- <div class="grid-2"> -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Notary ID</mat-label>
+                                <input matInput formControlName="notaryId">
+                            </mat-form-field>
+                            <!-- </div> -->
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Upper Text</mat-label>
+                                <input matInput formControlName="sealUpperText" />
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Lower Text</mat-label>
+                                <input matInput formControlName="sealLowerText" />
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Seal Expiry Date</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="sealExpiryDate" />
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+            <button mat-flat-button color="primary" (click)="submit()">
+                Save Profile
+            </button>
+        </div>
+
+    </form>
+</div>
+<notary-loading [loaderType]="'spinner'"></notary-loading>

@@ -1,0 +1,29 @@
+<div class="data-container">
+  <div class="success-section" *ngIf="isVerified">
+    <div class="success-header">
+      <mat-icon class="success-icon">check_circle</mat-icon>
+      <h2 class="success-title">Identity Verified</h2>
+      <p class="success-message">Your document has been successfully uploaded and is now being verified.</p>
+    </div>
+  </div>
+
+  <div class="extracted-data-section" *ngIf="hasData">
+    <mat-card class="data-card">
+      <div class="card-header">
+        <h3 class="card-title">Extracted Information</h3>
+        <span class="data-badge">Verified Data</span>
+      </div>
+      <div class="data-grid">
+        <div class="data-item" *ngFor="let item of parsedData">
+          <div class="item-label">{{ item.label }}</div>
+          <div class="item-value">{{ item.value }}</div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="empty-state" *ngIf="!hasData && isVerified">
+    <mat-icon class="empty-icon">info</mat-icon>
+    <p class="empty-message">No additional data was extracted from your ID.</p>
+  </div>
+</div>

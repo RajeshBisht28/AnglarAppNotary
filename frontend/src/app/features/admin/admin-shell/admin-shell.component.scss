@@ -1,0 +1,28 @@
+
+.shell-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-body {
+  height: calc(100vh - 56px);
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+.content-area {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+  .menu-btn {
+    display: none;
+  }
+}
+

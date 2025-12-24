@@ -1,0 +1,55 @@
+.panel-card {
+    padding: 16px;
+    border-radius: 16px;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.appt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.appt-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(26, 35, 126, .04);
+}
+
+.appt-item:hover {
+    background: rgba(79, 195, 247, .08);
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.appt-when {
+    font-weight: 600;
+}
+
+.appt-who {
+    color: rgba(0, 0, 0, .7);
+    font-size: 13px;
+}
+
+.appt-type {
+    color: rgba(0, 0, 0, .6);
+    font-size: 12px;
+}

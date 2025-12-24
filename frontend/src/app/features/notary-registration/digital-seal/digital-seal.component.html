@@ -1,0 +1,84 @@
+<div class="step-content">
+  <h2 class="mat-headline">Create Your Digital Seal</h2>
+  <notary-loading [loaderType]="'spinner'"></notary-loading>
+  <form [formGroup]="sealForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Seal Text</mat-label>
+      <input matInput formControlName="sealName" placeholder="e.g., 'Notary Public, State of California'">
+      <mat-error>Seal text is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Seal Style</mat-label>
+      <mat-select formControlName="sealStyle">
+        <mat-option value="circle">Circle</mat-option>
+        <mat-option value="rectangle">Rectangle</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Upper Seal Text</mat-label>
+      <input matInput formControlName="sealUpperText" placeholder="">
+      <mat-error>Upper Seal text is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Lower Seal Text</mat-label>
+      <input matInput formControlName="sealLowerText" placeholder="">
+      <mat-error>Lower Seal text is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Notary Id</mat-label>
+      <input matInput formControlName="notaryId" placeholder="">
+      <mat-error>Notary Id required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Expiry Date</mat-label>
+      <input matInput [matDatepicker]="expireOn" formControlName="sealExpiryDate">
+      <mat-datepicker-toggle matSuffix [for]="expireOn"></mat-datepicker-toggle>
+      <mat-datepicker #expireOn></mat-datepicker>
+      <mat-error>Expiry date is required</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button mat-button [disabled]="!sealForm.valid" color="primary" (click)="generateSeal()">
+      Generate Seal
+    </button>
+
+    <!-- <div class="upload-section">
+      <h3 class="mat-subheader">Upload Your Signature</h3>
+      <div class="upload-area" (click)="signatureInput.click()">
+        <input #signatureInput type="file" (change)="onSignatureUpload($event)" accept="image/*" style="display: none;">
+        <mat-icon class="upload-icon">signature</mat-icon>
+        <p>{{ sealForm.get('signature')?.value?.name || 'Upload a clear image of your signature' }}</p>
+      </div>
+    </div>
+
+    <div class="preview-section" *ngIf="sealPreview">
+      <h3 class="mat-subheader">Seal Preview</h3>
+      <div class="preview-container">
+        <img [src]="sealPreview" alt="Seal Preview" class="seal-preview">
+        <button mat-button color="primary" (click)="generatePreview()">
+          <mat-icon>refresh</mat-icon> Regenerate
+        </button>
+      </div>
+    </div> -->
+
+    <div class="preview-section" *ngIf="sealPreview">
+      <h3 class="mat-subheader">Seal Preview</h3>
+      <div class="preview-container">
+        <img [src]="sealImageSrc" alt="Seal Preview" class="seal-preview">
+      </div>
+    </div>
+
+    <div class="navigation-buttons">
+      <button mat-stroked-button color="primary" (click)="back.emit()">
+        <mat-icon>arrow_back</mat-icon> Back
+      </button>
+      <button mat-raised-button color="primary" [disabled]="!sealForm.valid" (click)="onNext()">
+        Next <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

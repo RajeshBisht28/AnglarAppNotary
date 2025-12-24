@@ -1,0 +1,21 @@
+<div class="dashboard-container">
+  <notary-dashboard-header
+    [firstName]="firstName" (notarizeClick)="onNotarizeNow()"
+  ></notary-dashboard-header>
+
+  <notary-stats-grid
+    [stats]="statsArray"
+    (statClick)="onStatClick($event)"
+  ></notary-stats-grid>
+
+  <div class="content-grid">
+    <notary-recent-activity
+      [documents]="documents"
+      (viewAllClick)="onViewDocuments()"
+    ></notary-recent-activity>
+  </div>
+
+  <notary-profile-summary
+    [profileData]="profileData"
+  ></notary-profile-summary>
+</div>

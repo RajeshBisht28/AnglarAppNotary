@@ -1,0 +1,79 @@
+<div class="upcoming-sessions-container">
+  <h2 class="page-title">Upcoming Sessions</h2>
+
+  <div class="sessions-grid">
+    <ng-container *ngIf="!isLoading; else loadingTemplate">
+      <ng-container *ngIf="sessions.length > 0; else emptyTemplate">
+        <mat-card *ngFor="let session of sessions" class="session-card">
+          <div class="session-header">
+            <div class="status-indicator" [ngClass]="getStatusColor(session.status)">
+              <mat-icon>{{ getStatusIcon(session.status) }}</mat-icon>
+            </div>
+            <div class="session-meta">
+              <h3 class="session-title">{{ session.lnPackageName }}</h3>
+              <p class="notary-name">
+                <mat-icon class="inline-icon">person</mat-icon>
+                {{ session.notaryName }}
+              </p>
+            </div>
+          </div>
+
+          <div class="session-body">
+            <div class="session-detail">
+              <mat-icon>schedule</mat-icon>
+              <div class="detail-info">
+                <span class="detail-label">Scheduled Date & Time</span>
+                <span class="detail-value">{{ session.formattedScheduledDateTime }}</span>
+              </div>
+            </div>
+
+            <div class="session-detail">
+              <mat-icon>info</mat-icon>
+              <div class="detail-info">
+                <span class="detail-label">Status</span>
+                <span class="detail-value status-badge" [ngClass]="getStatusColor(session.status)">
+                  {{ session.scheduledStatus }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="session-actions">
+            <button mat-stroked-button (click)="onJoinSession(session)" class="join-btn">
+              <mat-icon>video_call</mat-icon>
+              Join Session
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="sessionMenu" aria-label="More options">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #sessionMenu="matMenu">
+              <button mat-menu-item (click)="onRescheduleSession(session)">
+                <mat-icon>edit</mat-icon>
+                <span>Reschedule</span>
+              </button>
+              <button mat-menu-item (click)="onCancelSession(session)" class="cancel-action">
+                <mat-icon>close</mat-icon>
+                <span>Cancel</span>
+              </button>
+            </mat-menu>
+          </div>
+        </mat-card>
+      </ng-container>
+
+      <ng-template #emptyTemplate>
+        <div class="empty-state">
+          <mat-icon class="empty-icon">event_busy</mat-icon>
+          <h3 class="empty-title">No Upcoming Sessions</h3>
+          <p class="empty-message">You don't have any scheduled sessions at the moment.</p>
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #loadingTemplate>
+      <div class="loading-state">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading sessions...</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

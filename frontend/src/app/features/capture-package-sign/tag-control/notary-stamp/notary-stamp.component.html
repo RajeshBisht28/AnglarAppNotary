@@ -1,0 +1,12 @@
+<div
+  class="sign-image stamp-style"
+  (click)="openStampDialog()"
+  tabindex="0"
+  role="button"
+  *ngIf="!field.value"
+>
+  <mat-icon class="stamp-icon" >approval</mat-icon>
+</div>
+<div *ngIf="field.value">
+  <img  class="stamp-image" [src]="'data:image/png;base64,' + field.value" alt="Selected Notary Stamp" />
+</div>

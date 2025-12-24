@@ -1,0 +1,89 @@
+
+.stepper-container {
+  width: 100%;
+  margin-bottom: 2rem;
+  
+  .stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      
+      .step-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e0e0e0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 8px;
+        color: #757575;
+        transition: all 0.3s ease;
+        
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+        
+        .completed-icon {
+          color: white;
+        }
+      }
+      
+      .step-label {
+        color: #757575;
+        font-size: 14px;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      
+      .step-connector {
+        position: absolute;
+        top: 20px;
+        left: 70%;
+        width: 60%;
+        height: 2px;
+        background-color: #e0e0e0;
+        z-index: -1;
+      }
+      
+      &.completed {
+        .step-icon {
+          background-color: #4CAF50;
+        }
+        
+        .step-label {
+          color: #4CAF50;
+          font-weight: 500;
+        }
+        
+        .step-connector {
+          background-color: #4CAF50;
+        }
+      }
+      
+      &.current {
+        .step-icon {
+          background-color: #2196F3;
+          color: white;
+          box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2);
+        }
+        
+        .step-label {
+          color: #2196F3;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

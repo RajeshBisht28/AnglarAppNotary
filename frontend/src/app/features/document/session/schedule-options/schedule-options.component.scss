@@ -1,0 +1,40 @@
+.schedule-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    align-items: stretch
+}
+
+.option-card {
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+    outline: none
+}
+
+.option-card:focus,
+.option-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .12)
+}
+
+.option-content {
+    display: flex;
+    align-items: center;
+    gap: 16px
+}
+
+.option-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px
+}
+
+.option-title {
+    margin: 0 0 4px 0;
+    font-weight: 600
+}
+
+.option-subtitle {
+    margin: 0;
+    color: rgba(0, 0, 0, .6)
+}

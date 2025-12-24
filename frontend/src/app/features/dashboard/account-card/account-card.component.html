@@ -1,0 +1,20 @@
+<mat-card class="account-card">
+  <mat-card-header>
+    <mat-card-title>My Account</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="account-info">
+      <div class="user-details">
+        <h3>{{ userName }}</h3>
+        <p>{{ description }}</p>
+      </div>
+      <div class="user-avatar-large">
+        <span class="avatar-text-large">{{ userInitials }}</span>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" class="manage-account-btn" (click)="onManageAccount()">
+      <mat-icon>person</mat-icon>
+      Manage my account
+    </button>
+  </mat-card-content>
+</mat-card>

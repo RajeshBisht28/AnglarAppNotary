@@ -1,0 +1,31 @@
+.email-assign-dialog-container {
+  min-width: 400px;
+
+  mat-dialog-content {
+    padding: 20px 24px;
+
+    .dialog-description {
+      margin: 0 0 20px 0;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .full-width {
+        width: 100%;
+      }
+    }
+  }
+
+  mat-dialog-actions {
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}

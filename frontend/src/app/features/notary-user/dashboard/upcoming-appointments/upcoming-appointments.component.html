@@ -1,0 +1,18 @@
+<mat-card class="panel-card">
+  <div class="panel-header">
+    <mat-icon>event_upcoming</mat-icon>
+    <h3>Upcoming Appointments</h3>
+  </div>
+  <div class="appt-list">
+    <div class="appt-item" *ngFor="let i of items">
+      <div class="left">
+        <mat-icon>event</mat-icon>
+        <div class="info">
+          <div class="appt-when">{{ i.when }}</div>
+          <div class="appt-who">{{ i.who }}</div>
+        </div>
+      </div>
+      <div class="appt-type">{{ i.type }}</div>
+    </div>
+  </div>
+</mat-card>

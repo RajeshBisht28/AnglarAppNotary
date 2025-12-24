@@ -1,0 +1,52 @@
+.accounts-container {
+  //max-width: 900px;
+ // margin: 2rem auto;
+  //border-radius: 16px;
+  overflow: hidden;
+ // box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+
+    .title {
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.5px;
+    }
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    .search-box {
+      width: 250px;
+    }
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-radius: 8px;
+    background-color: #fff;
+
+    th.mat-header-cell {
+      background: #f5f7fa;
+      font-weight: 600;
+      color: #3f51b5;
+    }
+
+    td.mat-cell {
+      font-size: 0.95rem;
+    }
+
+    tr.mat-row:hover {
+      background-color: #f0f4ff;
+      transition: background 0.3s ease;
+    }
+  }
+}

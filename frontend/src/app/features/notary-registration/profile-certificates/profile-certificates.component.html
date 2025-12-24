@@ -1,0 +1,52 @@
+<div class="step-content">
+  <h2 class="mat-headline">Profile & Certificates</h2>
+  <notary-loading [loaderType]="'spinner'"></notary-loading>
+  <div class="upload-section">
+    <h3 class="mat-subheader">Photo ID</h3>
+    <div class="upload-area" (click)="photoIdInput.click()">
+      <input #photoIdInput type="file" (change)="onFileSelected($event, 'photoId')" accept="image/*" style="display: none;">
+      <mat-icon class="upload-icon">portrait</mat-icon>
+      <p>{{ documents.photoId?.name || 'Upload government-issued photo ID' }}</p>
+    </div>
+  </div>
+  
+  <div class="upload-section">
+    <h3 class="mat-subheader">Notary Commission Certificate</h3>
+    <div class="upload-area" (click)="certificateInput.click()">
+      <input #certificateInput type="file" (change)="onFileSelected($event, 'commissionCertificate')" accept=".pdf,.jpg,.png" style="display: none;">
+      <mat-icon class="upload-icon">description</mat-icon>
+      <p>{{ documents.commissionCertificate?.name || 'Upload your notary commission certificate' }}</p>
+    </div>
+  </div>
+  
+  <div class="upload-section">
+    <h3 class="mat-subheader">Additional Certificates (Optional)</h3>
+    <div class="upload-area" (click)="otherInput.click()">
+      <input #otherInput type="file" (change)="onFileSelected($event, 'other')" accept=".pdf,.jpg,.png" style="display: none;">
+      <mat-icon class="upload-icon">upload</mat-icon>
+      <p>Upload any additional certificates</p>
+    </div>
+    
+    <mat-list *ngIf="documents.otherCertificates.length > 0">
+      <mat-list-item *ngFor="let doc of documents.otherCertificates; let i = index">
+        <mat-icon mat-list-icon>description</mat-icon>
+        <div mat-line>{{ doc.name }}</div>
+        <!-- <div mat-line class="file-size">{{ doc.size | fileSize }}</div> -->
+        <button mat-icon-button (click)="removeFile(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div class="navigation-buttons">
+    <button mat-stroked-button color="primary" (click)="back.emit()">
+      <mat-icon>arrow_back</mat-icon> Back
+    </button>
+    <button mat-raised-button color="primary" 
+            [disabled]="!documents.photoId || !documents.commissionCertificate" 
+            (click)="onNext()">
+      Next <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.step-content {
+  .mat-headline {
+    margin-bottom: 1.5rem;
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .row {
+    display: flex;
+    gap: 1rem;
+    
+    .col {
+      flex: 1;
+    }
+  }
+
+  .navigation-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+}

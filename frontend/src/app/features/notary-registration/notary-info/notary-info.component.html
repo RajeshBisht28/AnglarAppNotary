@@ -1,0 +1,61 @@
+<div class="step-content">
+    <h2 class="mat-headline">Notary Information</h2>
+    <notary-loading [loaderType]="'spinner'"></notary-loading>
+    <form [formGroup]="notaryForm">
+        <div class="row">
+            <mat-form-field appearance="fill" class="col">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName">
+                <mat-error>First name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="col">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName">
+                <mat-error>Last name is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Commission Number</mat-label>
+            <input matInput formControlName="commissionNumber">
+            <mat-icon matSuffix>badge</mat-icon>
+            <mat-error>Commission number is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Commission Expiry Date</mat-label>
+            <input matInput [matDatepicker]="expiryPicker" formControlName="commissionExpiryDate">
+            <mat-datepicker-toggle matSuffix [for]="expiryPicker"></mat-datepicker-toggle>
+            <mat-datepicker #expiryPicker></mat-datepicker>
+            <mat-error>Expiry date is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Jurisdiction</mat-label>
+            <input matInput formControlName="jurisdiction">
+            <mat-icon matSuffix>location_on</mat-icon>
+            <mat-error>Jurisdiction is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phone" type="tel">
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-error>Valid phone number required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error>Valid email required</mat-error>
+        </mat-form-field>
+
+        <div class="navigation-buttons">
+            <button mat-raised-button color="primary" [disabled]="!notaryForm.valid" (click)="onSubmit()">
+                Next <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
+    </form>
+</div>

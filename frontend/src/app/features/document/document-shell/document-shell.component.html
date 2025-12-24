@@ -1,0 +1,13 @@
+<div class="notary-container">
+  <mat-card [ngClass]="{ 'sign-mode': isSignRoute }">
+    <document-header></document-header>
+
+    <notary-stepper [steps]="steps" [currentStep]="currentStep"></notary-stepper>
+
+    <div class="form-container" [ngClass]="{ 'no-outer-scroll': isSignRoute }">
+      <router-outlet></router-outlet>
+    </div>
+
+    <document-footer></document-footer>
+  </mat-card>
+</div>

@@ -1,0 +1,21 @@
+<div class="schedule-options">
+  <mat-card class="option-card" (click)="select('instant')" tabindex="0" role="button" aria-label="Schedule Instant">
+    <mat-card-content class="option-content">
+      <mat-icon class="option-icon" color="primary">flash_on</mat-icon>
+      <div class="option-text">
+        <h3 class="option-title">Schedule Instant</h3>
+        <p class="option-subtitle">Start a session right away.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="option-card" (click)="select('later')" tabindex="0" role="button" aria-label="Schedule Later">
+    <mat-card-content class="option-content">
+      <mat-icon class="option-icon" color="primary">schedule</mat-icon>
+      <div class="option-text">
+        <h3 class="option-title">Schedule Later</h3>
+        <p class="option-subtitle">Pick a date, time.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

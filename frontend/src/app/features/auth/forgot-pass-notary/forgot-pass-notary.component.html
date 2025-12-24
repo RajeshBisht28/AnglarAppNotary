@@ -1,0 +1,48 @@
+<div class="forgot-password-container">
+  <div class="forgot-password-card">
+
+    <div class="header">
+      <img src="assets/doccentral-logo.png" alt="App Logo" class="logo">
+      <h1>Reset Your Password</h1>
+      <p class="subtitle">
+        Enter your email to receive a password reset link
+      </p>
+    </div>
+
+    <form *ngIf="!success"
+          [formGroup]="forgotForm"
+          (ngSubmit)="onSubmit()"
+          class="form">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        <mat-icon matPrefix>mail_outline</mat-icon>
+
+        <mat-error *ngIf="email?.errors?.['required']">Email is required</mat-error>
+        <mat-error *ngIf="email?.errors?.['email']">Please enter a valid email</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="submit-button"
+        [disabled]="forgotForm.invalid || loading">
+        <span *ngIf="!loading">Send Reset Link</span>
+        <mat-spinner *ngIf="loading" diameter="24"></mat-spinner>
+      </button>
+
+      <div class="back-to-login">
+        <a mat-button (click)="goToLogin()" color="primary">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Login
+        </a>
+      </div>
+    </form>
+
+    <div class="success-message" *ngIf="success">
+      <mat-icon class="success-icon">check_circle</mat-icon>
+      <h3>Reset Link Sent!</h3>
+      <p>We've sent a password reset link to your email address.</p>
+      <p>Please check your inbox and follow the instructions.</p>
+    </div>
+
+  </div>
+</div>

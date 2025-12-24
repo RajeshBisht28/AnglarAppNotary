@@ -1,0 +1,23 @@
+<div class="payment-success-container" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card class="payment-card mat-elevation-z6">
+    <div class="image-wrapper">
+       <img
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXp914joCF2G5FxgdhaD_58ukNEKPuZYSeqaIusyk4pqI0hz_7IB464ZwWf8CWGiCT1l4UB7XLfiE5l8W7pFdJWSUAOYexJtP64OTO7Xz7zTG8sa1DiprmLJCw9uAO-2isrrCMMzO-gINLFMMGiFeOEW5CcKlOjB47CSv_oAvqLIDRsLjVdZJVPLUZqis65sPkUDS8OKvEX-0Kwoz08ZVY0t98HgmIWpSteu-uPPsjBXcnMnWeHJ6ihJ2kW-ewFqHfcWSce8dTMX8"
+        alt="Payment Success"
+      />
+    </div>
+
+    <h2 class="title">Your notarization is successful.</h2>
+    <p class="subtitle">Download your document from below.</p>
+
+    <button mat-raised-button color="primary" class="download-btn" (click)="onDownload()">
+      <mat-icon>download</mat-icon>
+      &nbsp;Download Document
+    </button>
+    <button mat-raised-button color="primary" class="download-btn" (click)="goToDashboard()">
+      <mat-icon>dashboard</mat-icon>
+      &nbsp;Go to Dashboard
+    </button>
+  </mat-card>
+</div>
+<notary-loading [loaderType]="'spinner'"></notary-loading>

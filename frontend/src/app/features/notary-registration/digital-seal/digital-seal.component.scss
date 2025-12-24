@@ -1,0 +1,78 @@
+// .step-content {
+//   .preview-section {
+//     margin: 2rem 0;
+    
+//     .preview-container {
+//       display: flex;
+//       flex-direction: column;
+//       align-items: center;
+//       margin-top: 1rem;
+      
+//       .seal-preview {
+//         max-width: 200px;
+//         max-height: 200px;
+//         border: 1px solid #e0e0e0;
+//         border-radius: 4px;
+//         margin-bottom: 1rem;
+//       }
+//     }
+//   }
+
+//   .navigation-buttons {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-top: 2rem;
+//   }
+// }
+
+.step-content {
+  max-width: 600px;
+  margin: 0 auto;
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; // This adds consistent spacing between all form fields
+    
+    mat-form-field {
+      width: 100%;
+      
+      // Optional: If you want more space specifically for the select dropdown
+      &.mat-form-field-type-mat-select {
+        margin-top: 0.5rem;
+      }
+    }
+    
+    button[mat-raised-button] {
+      margin-top: 1rem;
+      align-self: flex-start; // Aligns the Generate Seal button to the left
+    }
+  }
+
+  .preview-section {
+    margin: 2rem 0;
+    
+    .preview-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1rem;
+      
+      .seal-preview {
+        max-width: 200px;
+        max-height: 200px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+  }
+}

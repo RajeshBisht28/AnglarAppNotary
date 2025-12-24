@@ -1,0 +1,11 @@
+<mat-card>
+  <h3>Schedule (Inline Widget)</h3>
+
+  <div *ngIf="loading" class="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div #inlineContainer class="inline-container" *ngIf="!loading && !error"></div>
+</mat-card>

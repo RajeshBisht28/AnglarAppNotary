@@ -1,0 +1,71 @@
+<div class="set-password-container">
+  <div class="set-password-card">
+
+    <div class="header">
+      <img src="assets/doccentral-logo.png" alt="App Logo" class="logo" />
+      <h1>Set Your Password</h1>
+      <p class="subtitle">Create your new password to access your account</p>
+    </div>
+
+    <!-- 🔥 SHOW FORM ONLY IF NOT SUCCESS -->
+    <form
+      *ngIf="!success"
+      [formGroup]="passwordForm"
+      (ngSubmit)="onSubmit()"
+      class="form"
+    >
+
+      <!-- Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>New Password</mat-label>
+        <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="password" />
+        <button mat-icon-button matSuffix type="button" (click)="hide1 = !hide1">
+          <mat-icon>{{ hide1 ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="password?.hasError('minlength')">Minimum 6 characters</mat-error>
+      </mat-form-field>
+
+      <!-- Confirm Password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="confirmPassword" />
+        <button mat-icon-button matSuffix type="button" (click)="hide2 = !hide2">
+          <mat-icon>{{ hide2 ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="confirmPassword?.hasError('required')">Confirm Password is required</mat-error>
+        <mat-error *ngIf="passwordForm.hasError('passwordMismatch')">Passwords do not match</mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="submit-button"
+        [disabled]="passwordForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Set Password</span>
+        <mat-spinner *ngIf="loading" diameter="24"></mat-spinner>
+      </button>
+
+      <div class="back-to-login">
+        <a mat-button (click)="goToLogin()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Login
+        </a>
+      </div>
+
+    </form>
+
+    <div *ngIf="success" class="success-message">
+      <mat-icon class="success-icon">check_circle</mat-icon>
+      <h3>Password Updated!</h3>
+      <p>Your password has been successfully updated.</p>
+      <p>You can now log in using your new password.</p>
+
+      <button mat-flat-button color="primary" (click)="goToLogin()" class="login-btn">
+        Go to Login
+      </button>
+    </div>
+
+  </div>
+</div>

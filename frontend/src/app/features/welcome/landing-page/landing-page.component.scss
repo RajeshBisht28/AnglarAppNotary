@@ -1,0 +1,50 @@
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  height: 100vh;
+  box-sizing: border-box; 
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  text-align: center;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+
+  .logo-icon {
+    font-size: 48px;
+    color: #2d3748;
+  }
+
+  .brand-name {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2d3748;
+  }
+}
+
+.main-heading {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 20px;
+}
+
+.subheading {
+  font-size: 18px;
+  color: #4a5568;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.cta-button {
+  padding: 14px 36px;
+  font-size: 18px;
+  border-radius: 8px;
+}

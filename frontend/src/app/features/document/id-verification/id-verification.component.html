@@ -1,0 +1,123 @@
+<div class="idv-container">
+  <div class="idv-header">
+    <h1 class="idv-title">Verify your identity</h1>
+    <p class="idv-subtitle" *ngIf="stage !== 'qr'">We use a government‑issued ID to confirm it's really you.</p>
+  </div>
+
+  <!-- Stage 1: Device choice -->
+  <section class="device-section" *ngIf="stage === 'device'">
+    <h2 class="section-title">Choose your device</h2>
+
+    <div class="device-grid">
+      <mat-card class="device-option" tabindex="0" role="button" [attr.aria-pressed]="selectedDevice==='mobile'"
+        [class.device-option--selected]="selectedDevice==='mobile'" (click)="chooseDevice('mobile')"
+        (keyup.enter)="chooseDevice('mobile')">
+        <div class="option-head">
+          <span class="badge">Recommended</span>
+          <mat-icon class="select-indicator" *ngIf="selectedDevice==='mobile'">check_circle</mat-icon>
+        </div>
+        <div class="option-body">
+          <div class="option-icon"><mat-icon>smartphone</mat-icon></div>
+          <div class="option-content">
+            <div class="option-title">Use mobile phone</div>
+            <div class="option-desc">Fast & reliable verification</div>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="device-option" tabindex="0" role="button" [attr.aria-pressed]="selectedDevice==='web'"
+        [class.device-option--selected]="selectedDevice==='web'" (click)="chooseDevice('web')"
+        (keyup.enter)="chooseDevice('web')">
+        <div class="option-head">
+          <span class="badge badge--muted">&nbsp;</span>
+          <mat-icon class="select-indicator" *ngIf="selectedDevice==='web'">check_circle</mat-icon>
+        </div>
+        <div class="option-body">
+          <div class="option-icon"><mat-icon>desktop_windows</mat-icon></div>
+          <div class="option-content">
+            <div class="option-title">Use this device</div>
+            <div class="option-desc">Webcam required</div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+    <mat-card class="requirements">
+      <h3 class="requirements-title">What you’ll need</h3>
+      <ul class="requirements-list">
+        <li>A valid government‑issued photo ID</li>
+        <li>Good lighting conditions</li>
+        <li>Clear, unobstructed view of your ID</li>
+        <li>All four corners visible in the photo</li>
+      </ul>
+      <!-- <a class="link" href="https://support.google.com/pay/answer/7643986?hl=en" target="_blank" rel="noopener">What are
+        acceptable forms of ID?</a> -->
+    </mat-card>
+
+    <div class="action-row">
+      <button mat-flat-button color="primary" (click)="continueFromDevice()">Continue</button>
+    </div>
+  </section>
+
+  <!-- Stage 2: ID type -->
+  <section class="idtype-section" *ngIf="stage === 'idType'">
+    <h2 class="section-title">What type of ID do you have?</h2>
+    <p class="idtype-hint">For security, we must capture a government‑issued ID.</p>
+
+    <mat-card>
+      <form [formGroup]="idForm" class="id-form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Select country</mat-label>
+          <mat-select formControlName="country">
+            <mat-option *ngFor="let c of countries" [value]="c.code">{{ c.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="idForm.get('country')?.hasError('required')">Country is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select government issued ID</mat-label>
+          <mat-select formControlName="idType">
+            <mat-option *ngFor="let t of idTypes" [value]="t.value">{{ t.label }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="idForm.get('idType')?.hasError('required')">ID type is required</mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card>
+
+    <div class="action-row">
+      <button mat-stroked-button (click)="backFromIdType()">Back</button>
+      <button mat-flat-button color="primary" (click)="continueFromIdType()"
+      [style.background-color]="userDetail.branding.primaryButtonsBackgroundColor"
+      [style.color]="userDetail.branding.primaryButtonsTextColor"  [disabled]="idForm.invalid">Continue</button>
+    </div>
+  </section>
+
+  <!-- Stage 3: QR display -->
+  <section class="qr-section" *ngIf="stage === 'qr'">
+    <h2 class="section-title">Scan the QR code</h2>
+    <p class="qr-hint" *ngIf="selectedDevice==='mobile'">Open your phone’s camera and scan to continue verification.</p>
+    <p class="qr-hint" *ngIf="selectedDevice==='web'">Continue verification in this tab if prompted.</p>
+
+    <mat-card class="qr-card" aria-live="polite">
+      <div class="qr-wrapper" [class.qr-loading]="loadingQr">
+        <mat-progress-spinner *ngIf="loadingQr" diameter="64" mode="indeterminate"></mat-progress-spinner>
+        <img *ngIf="!loadingQr && qrBase64" class="qr-image" [src]="'data:image/png;base64,' + qrBase64"
+          alt="ID verification QR code">
+        <p class="qr-fallback" *ngIf="!loadingQr && !qrBase64">QR not available. Please try again.</p>
+      </div>
+    </mat-card>
+
+    <div class="action-row">
+      <button mat-stroked-button (click)="backFromQr()">Back</button>
+    </div>
+  </section>
+
+  <section class="submitted-section" *ngIf="stage ==='extracted' || stage ==='submitted'">
+    <extracted-data-display
+      [extractedDataString]="extractedData()"
+      [isVerified]="verificationStatus() === 'Y'">
+    </extracted-data-display>
+  </section>
+</div>
+
+<notary-loading [loaderType]="'spinner'" *ngIf="loadingQr"></notary-loading>

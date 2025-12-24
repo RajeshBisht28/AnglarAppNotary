@@ -1,0 +1,12 @@
+<div class="doc-footer">
+  <button mat-stroked-button color="primary" (click)="onPrev()" >
+    <mat-icon>arrow_back</mat-icon>
+    Previous
+  </button>
+
+  <button mat-raised-button color="primary" (click)="onNext()" [style.background-color]="user.branding.primaryButtonsBackgroundColor"
+      [style.color]="user.branding.primaryButtonsTextColor" >
+    {{ isLast ? 'Submit' : 'Next' }}
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
+</div>

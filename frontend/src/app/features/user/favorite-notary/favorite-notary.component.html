@@ -1,0 +1,83 @@
+<div class="favorite-notary-container">
+  <h2 class="page-title">Favorite Notary Persons</h2>
+
+  <div class="notaries-grid">
+    <ng-container *ngIf="!isLoading; else loadingTemplate">
+      <ng-container *ngIf="notaries.length > 0; else emptyTemplate">
+        <mat-card *ngFor="let notary of notaries" class="notary-card">
+          <div class="notary-header">
+            <div class="avatar">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="notary-title-info">
+              <h3 class="notary-name">{{ notary.name }}</h3>
+              <div class="rating">
+                <mat-icon *ngFor="let i of getStarArray(notary.rating)" class="star">star</mat-icon>
+                <mat-icon *ngFor="let i of getEmptyStars(notary.rating)" class="star-empty">star_outline</mat-icon>
+                <span class="rating-value">{{ notary.rating }}</span>
+                <span class="rating-label">({{ getRatingLabel(notary.rating) }})</span>
+              </div>
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="notaryMenu" aria-label="More options">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #notaryMenu="matMenu">
+              <button mat-menu-item (click)="onViewProfile(notary)">
+                <mat-icon>person</mat-icon>
+                <span>View Profile</span>
+              </button>
+              <button mat-menu-item (click)="onRemoveFavorite(notary)" class="remove-action">
+                <mat-icon>close</mat-icon>
+                <span>Remove</span>
+              </button>
+            </mat-menu>
+          </div>
+
+          <div class="notary-info">
+            <div class="info-item">
+              <mat-icon>email</mat-icon>
+              <div class="info-detail">
+                <span class="info-label">Email</span>
+                <a [href]="'mailto:' + notary.email" class="info-value">{{ notary.email }}</a>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <mat-icon>phone</mat-icon>
+              <div class="info-detail">
+                <span class="info-label">Phone</span>
+                <a [href]="'tel:' + notary.phone" class="info-value">{{ notary.phone }}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="notary-actions">
+            <button mat-raised-button color="primary" (click)="onScheduleSession(notary)" class="schedule-btn">
+              <mat-icon>calendar_today</mat-icon>
+              Schedule Session
+            </button>
+            <button mat-stroked-button (click)="onSendMessage(notary)" class="message-btn">
+              <mat-icon>message</mat-icon>
+              Message
+            </button>
+          </div>
+        </mat-card>
+      </ng-container>
+
+      <ng-template #emptyTemplate>
+        <div class="empty-state">
+          <mat-icon class="empty-icon">favorite_border</mat-icon>
+          <h3 class="empty-title">No Favorite Notaries</h3>
+          <p class="empty-message">You haven't added any favorite notary persons yet.</p>
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #loadingTemplate>
+      <div class="loading-state">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading notaries...</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

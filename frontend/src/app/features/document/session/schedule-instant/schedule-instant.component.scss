@@ -1,0 +1,19 @@
+.instant-card {
+    display: block
+}
+
+.instant-content {
+    display: flex;
+    align-items: center;
+    gap: 16px
+}
+
+.instant-title {
+    margin: 0 0 4px 0;
+    font-weight: 600
+}
+
+.instant-subtitle {
+    margin: 0;
+    color: rgba(0, 0, 0, .6)
+}

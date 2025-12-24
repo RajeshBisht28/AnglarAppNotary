@@ -1,0 +1,13 @@
+<mat-card>
+  <!-- <h3>Schedule a Session</h3> -->
+
+  <!-- <div *ngIf="loading" class="loader">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div> -->
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="safeUrl" class="iframe-wrapper">
+    <iframe [src]="safeUrl" frameborder="0" title="Calendly booking"></iframe>
+  </div>
+</mat-card>

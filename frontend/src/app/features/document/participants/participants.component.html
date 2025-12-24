@@ -1,0 +1,122 @@
+<div class="step-content">
+  <notary-loading [loaderType]="'spinner'"></notary-loading>
+  <h2 class="mat-headline">Participants Information</h2>
+
+  <form [formGroup]="participantsForm">
+    <div formArrayName="participants"
+         cdkDropList
+         cdkDropListOrientation="vertical"
+         [cdkDropListDisabled]="participants.length < 2"
+         (cdkDropListDropped)="drop($event)"
+         class="participants-drop-list">
+
+      <div *ngFor="let participant of participants.controls; let i = index"
+           [formGroupName]="i"
+           class="participant-card"
+           cdkDrag
+           [cdkDragDisabled]="participants.length < 2">
+
+        <div class="participant-header">
+          <div class="participant-title">
+            <div class="sequence-badge" aria-hidden="true">{{ i + 1 }}</div>
+            <div class="mat-subheader">Participant {{ i + 1 }}</div>
+          </div>
+          <div class="participant-actions">
+            <button *ngIf="participants.length > 1"
+                    mat-icon-button
+                    type="button"
+                    class="drag-handle"
+                    cdkDragHandle
+                    matTooltip="Drag to reorder">
+              <mat-icon>drag_indicator</mat-icon>
+            </button>
+            <button *ngIf="participants.length > 1"
+                    mat-icon-button
+                    color="warn"
+                    type="button"
+                    (click)="removeParticipant(i, participant)"
+                    matTooltip="Remove participant">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="participant-fields">
+          <mat-form-field appearance="fill" class="sequence-field">
+            <mat-label>Seq No.</mat-label>
+            <input matInput formControlName="signerSeq" type="number" readonly [value]="i + 1">
+            <!-- <mat-icon matSuffix>numbers</mat-icon> -->
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="first-name-field">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="signerFirstName" placeholder="Enter first name" autocomplete="given-name">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="participant.get('signerFirstName')?.invalid">
+              Please enter a valid first name (min 2 characters)
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="last-name-field">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="signerLastName" placeholder="Enter last name" autocomplete="family-name">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="participant.get('signerLastName')?.invalid">
+              Please enter a valid last name (min 2 characters)
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="email-field">
+            <mat-label>Email Address</mat-label>
+            <input matInput type="email" formControlName="signerEmail" placeholder="Enter email" autocomplete="email">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="participant.get('signerEmail')?.invalid">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="type-field">
+            <mat-label>Participant Type</mat-label>
+            <mat-select formControlName="signerType">
+              <mat-option value="Applicant">Applicant</mat-option>
+              <mat-option value="Witness">Witness</mat-option>
+              <mat-option value="Notary">Notary</mat-option>
+              <mat-option value="Signer">Signer</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>supervisor_account</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="dob-field" *ngIf="participant.get('signerType')?.value === 'Applicant' || participant.get('signerType')?.value === 'Signer'">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dob" placeholder="Select DOB">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="participant.get('dob')?.hasError('required')">
+              DOB is required for Signer
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <ng-template cdkDragPreview>
+          <div class="participant-card drag-preview">
+            <div class="participant-header">
+              <div class="participant-title">
+                <div class="sequence-badge">{{ i + 1 }}</div>
+                <h3 class="mat-subheader">Reordering…</h3>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <div class="drag-placeholder" *cdkDragPlaceholder></div>
+      </div>
+    </div>
+
+    <div class="add-participant-section">
+      <button mat-stroked-button color="primary" type="button" (click)="addParticipant()">
+        <mat-icon>add</mat-icon>
+        Add Another Participant
+      </button>
+    </div>
+  </form>
+</div>

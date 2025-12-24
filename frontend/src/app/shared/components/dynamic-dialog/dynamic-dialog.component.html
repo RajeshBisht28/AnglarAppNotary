@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{ config.title }}</h2>
+<div mat-dialog-content class="dialog-content">
+  <p *ngIf="config.message" class="dialog-message">{{ config.message }}</p>
+
+  <form [formGroup]="form" class="dynamic-form">
+    <ng-container *ngFor="let field of (config.fields || [])">
+      <mat-form-field appearance="outline" class="full-width" *ngIf="field.type !== 'checkbox'">
+        <mat-label>{{ field.label }}</mat-label>
+        <input *ngIf="field.type === 'text' || field.type === 'email' || field.type === 'password' || field.type === 'number'" 
+               matInput 
+               [type]="field.type"
+               [placeholder]="field.placeholder!"
+               [formControlName]="field.name">
+        <textarea *ngIf="field.type === 'textarea'" matInput [placeholder]="field.placeholder!" [formControlName]="field.name"></textarea>
+        <input *ngIf="field.type === 'date'" matInput [matDatepicker]="picker" [placeholder]="field.placeholder!" [formControlName]="field.name">
+        <mat-datepicker #picker></mat-datepicker>
+
+        <mat-select *ngIf="field.type === 'select'" [placeholder]="field.placeholder!" [formControlName]="field.name">
+          <mat-option *ngFor="let opt of field.options" [value]="opt.value">{{ opt.label }}</mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get(field.name)?.hasError('required')">{{ field.label }} is required</mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('email')">Enter a valid email</mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('min')">Value is too small</mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('max')">Value is too large</mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('minlength')">Too short</mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('maxlength')">Too long</mat-error>
+        <mat-error *ngIf="form.get(field.name)?.hasError('pattern')">Special characters are not allowed in the package name except -, _, ., ~, @.</mat-error>
+      </mat-form-field>
+
+      <mat-checkbox *ngIf="field.type === 'checkbox'" [formControlName]="field.name" class="full-checkbox">
+        {{ field.label }}</mat-checkbox>
+    </ng-container>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <ng-container *ngFor="let btn of (config.buttons && config.buttons.length ? config.buttons : defaultButtons)">
+    <button mat-stroked-button *ngIf="btn.type === 'close'" (click)="close()" [color]="btn.color">{{ btn.text }}</button>
+    <button mat-flat-button *ngIf="btn.type === 'submit'" 
+    (click)="submit()"
+     [disabled]="btn.disabledWhenInvalid && form.invalid || isSubmitting"  [style.background-color]="user.branding.actionButtonBackgroundColor"
+      [style.color]="user.branding.actionButtonTextColor">
+      {{ isSubmitting ? 'Saving...' : btn.text }}
+    </button>
+    <button mat-flat-button *ngIf="btn.type === 'custom'" [disabled]="(btn.disabledWhenInvalid && form.invalid) || isSubmitting" (click)="onCustom(btn.actionKey!)" [color]="btn.color">{{ btn.text }}</button>
+  </ng-container>
+</div>
+
+

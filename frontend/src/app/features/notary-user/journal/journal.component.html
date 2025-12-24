@@ -1,0 +1,102 @@
+<mat-card class="journal-card">
+  <div class="toolbar-row">
+    <div class="left-controls">
+      <h2 class="journal-title">Journal</h2>
+    </div>
+    <div class="right-controls">
+      <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input 
+          type="text" 
+          [ngModel]="query" 
+          (ngModelChange)="applyFilter($event)" 
+          placeholder="Search journal..." 
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="table modern-table">
+    <div class="table-scroll">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+
+        <!-- Package Name -->
+        <ng-container matColumnDef="packageName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Package Name</th>
+          <td mat-cell *matCellDef="let j">
+            <div class="cell-name">
+              <div class="name-wrap">
+                <div class="file-name">{{ j.packageName }}</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Document Title -->
+        <ng-container matColumnDef="documentTitle">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Document Title</th>
+          <td mat-cell *matCellDef="let j">
+            <span class="muted">{{ j.documentTitle }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Signer Name -->
+        <ng-container matColumnDef="signerName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Signer Name</th>
+          <td mat-cell *matCellDef="let j">
+            <span>{{ j.signerName }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let j">
+            <span class="status-chip" [ngClass]="(j.status || '').toLowerCase()">
+              {{ j.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let j">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+
+              <button mat-menu-item (click)="downloadRecordSession(j)">
+                <mat-icon>download</mat-icon>
+                <span>Download Record Session</span>
+              </button>
+
+              <button mat-menu-item (click)="onJournal(j)">
+                <mat-icon>description</mat-icon>
+                <span>Details</span>
+              </button>
+
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <!-- Table Rows -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    </div>
+
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+  </div>
+</mat-card>
+
+<notary-loading [loaderType]="'spinner'"></notary-loading>
+
+<app-journal-sidebar
+  [packageId]="journalPackageId"
+  [isOpen]="isJournalSidebarOpen"
+  (closePanel)="closeJournalSidebar()">
+</app-journal-sidebar>

@@ -1,0 +1,44 @@
+<div class="email-assign-dialog-container">
+  <h2 mat-dialog-title>Assign Package to User</h2>
+  
+  <mat-dialog-content>
+    <p class="dialog-description">Enter the email address of the user you want to assign this package to.</p>
+    
+    <form [formGroup]="form">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input 
+          matInput 
+          formControlName="email" 
+          type="email"
+          placeholder="user@example.com"
+        />
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button 
+      mat-button 
+      (click)="close()"
+      [disabled]="isSubmitting"
+    >
+      Cancel
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary"
+      (click)="submit()"
+      [disabled]="isSubmitting || form.invalid"
+    >
+      <span *ngIf="!isSubmitting">Send</span>
+      <span *ngIf="isSubmitting">Sending...</span>
+    </button>
+  </mat-dialog-actions>
+</div>

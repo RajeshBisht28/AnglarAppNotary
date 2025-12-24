@@ -1,0 +1,15 @@
+
+<div class="shell-layout">
+  <app-notary-header></app-notary-header>
+
+  <mat-sidenav-container class="app-body">
+
+    <mat-sidenav #drawer [mode]="mode" [opened]="opened" [fixedInViewport]="true" [fixedTopGap]="56">
+      <app-notary-sidebar></app-notary-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

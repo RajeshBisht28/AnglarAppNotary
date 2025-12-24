@@ -1,0 +1,20 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.content-wrapper {
+  margin-top: 64px;
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+  background: #f8f9fa;
+}
+
+.create-package-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+  overflow: hidden !important;
+  border-radius: 12px; 
+}
+

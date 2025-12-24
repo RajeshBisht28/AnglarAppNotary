@@ -1,0 +1,12 @@
+
+<mat-progress-bar
+  *ngIf="(loadingService.isLoading | async) && loaderType === 'bar'"
+  mode="indeterminate"
+  color="accent"
+  class="top-progress-bar"
+></mat-progress-bar>
+
+<div class="spinner-overlay"
+     *ngIf="(loadingService.isLoading | async) && loaderType === 'spinner'">
+  <mat-spinner diameter="60" strokeWidth="5"></mat-spinner>
+</div>

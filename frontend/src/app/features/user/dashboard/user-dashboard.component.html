@@ -1,0 +1,22 @@
+<div class="dashboard-container">
+  <app-dashboard-header
+    [firstName]="firstName"
+    (notarizeClick)="onNotarizeNow()"
+  ></app-dashboard-header>
+
+  <app-stats-grid
+    [stats]="statsArray"
+    (statClick)="onStatClick($event)"
+  ></app-stats-grid>
+
+  <div class="content-grid">
+    <app-recent-activity
+      [documents]="documents"
+      (viewAllClick)="onViewDocuments()"
+    ></app-recent-activity>
+  </div>
+
+  <app-profile-summary
+    [profileData]="profileData"
+  ></app-profile-summary>
+</div>

@@ -1,0 +1,11 @@
+<mat-card [ngClass]="['stat-card', 'stat-' + stat.type]" (click)="onCardClick()">
+  <mat-card-content>
+    <div class="stat-icon">
+      <mat-icon>{{ stat.icon }}</mat-icon>
+    </div>
+    <div class="stat-content">
+      <div class="stat-number">{{ stat.value }}</div>
+      <div class="stat-label">{{ stat.label }}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

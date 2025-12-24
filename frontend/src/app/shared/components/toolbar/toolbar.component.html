@@ -1,0 +1,32 @@
+<mat-toolbar class="notary-toolbar">
+    <div class="toolbar-content">
+        <img src="assets/doccentral-logo.png" alt="Leaflet" class="company-logo">
+
+
+        <button *ngIf="showBackButton" mat-icon-button class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+
+
+        <h1 class="toolbar-title">{{title}}</h1>
+
+        <mat-progress-bar *ngIf="showProgress" class="progress-bar" mode="determinate" [value]="progressValue">
+        </mat-progress-bar>
+
+        <span class="spacer"></span>
+
+        <div class="user-avatar" [matMenuTriggerFor]="userMenu">
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+        </div>
+        <mat-menu #userMenu="matMenu" class="user-menu">
+            <button mat-menu-item>
+                <mat-icon>settings</mat-icon>
+                <span>Settings</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>logout</mat-icon>
+                <span>Sign Out</span>
+            </button>
+        </mat-menu>
+    </div>
+</mat-toolbar>

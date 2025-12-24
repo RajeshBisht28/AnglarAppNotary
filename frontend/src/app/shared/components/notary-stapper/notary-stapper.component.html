@@ -1,0 +1,14 @@
+<div class="stepper-container">
+  <div class="stepper">
+    <div *ngFor="let step of steps; let i = index" class="step" 
+         [class.completed]="isCompleted(i + 1)" 
+         [class.current]="isCurrent(i)">
+      <div class="step-icon">
+        <mat-icon *ngIf="!isCompleted(i + 1)">{{step.icon}}</mat-icon>
+        <mat-icon *ngIf="isCompleted(i + 1)" class="completed-icon">check_circle</mat-icon>
+      </div>
+      <div class="step-label">{{ step.label }}</div>
+      <div class="step-connector" *ngIf="i !== steps.length - 1"></div>
+    </div>
+  </div>
+</div>

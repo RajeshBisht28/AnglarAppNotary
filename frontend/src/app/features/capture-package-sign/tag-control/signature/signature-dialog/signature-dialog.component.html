@@ -1,0 +1,83 @@
+<div class="dialog-shell">
+  <div class="dialog-header">
+    <h2 class="dialog-title">{{ data.fieldType === 'Initial' ? 'Choose Initials' : 'Choose Signature' }}</h2>
+    <button mat-icon-button aria-label="Close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <mat-tab-group [(selectedIndex)]="activeTabIndex" (selectedIndexChange)="onTabIndexChange($event)">
+      <mat-tab label="Recommended">
+        <div class="recommended-wrapper" *ngIf="!loading; else loadingTpl">
+          <div class="image-grid">
+            <button class="image-card" type="button" *ngIf="apiSignature && data.fieldType === 'Signature'" (click)="selectedDataUrl = base64ToDataUrl(apiSignature)">
+              <img [src]="base64ToDataUrl(apiSignature)" alt="API Signature" />
+            </button>
+            <button class="image-card" type="button" *ngIf="apiInitials && data.fieldType === 'Initial'" (click)="selectedDataUrl = base64ToDataUrl(apiInitials)">
+              <img [src]="base64ToDataUrl(apiInitials)" alt="API Initials" />
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Draw">
+        <div class="draw-wrapper">
+          <canvas #drawCanvas class="draw-canvas"
+            (pointerdown)="startDraw($event)"
+            (pointermove)="drawMove($event)"
+            (pointerup)="endDraw($event)"
+            (pointerleave)="endDraw($event)"></canvas>
+          <div class="draw-actions">
+            <button mat-button color="primary" (click)="clearDraw()">
+              <mat-icon>refresh</mat-icon>
+              Clear
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Type">
+        <div class="type-wrapper">
+          <mat-form-field appearance="outline" class="type-input">
+            <mat-label>{{ data.fieldType === 'Initial' ? 'Your initials' : 'Your full name' }}</mat-label>
+            <input matInput [ngModel]="data.fieldType === 'Initial' ? typedInitials : typedName" (ngModelChange)="onInputChange($event)" />
+          </mat-form-field>
+
+          <div class="type-loading" *ngIf="typeLoadingSignatures">
+            <mat-spinner diameter="28"></mat-spinner>
+            <span>Generating signatures…</span>
+          </div>
+
+          <div class="type-styles-container" *ngIf="!typeLoadingSignatures && typeSignatures.length > 0">
+            <div class="styles-label">Select a signature:</div>
+            <div class="styles-grid">
+              <button type="button" class="style-card" *ngFor="let style of typeSignatures; let i = index"
+                [class.active]="selectedDataUrl === base64ToDataUrl(style.base64)"
+                (click)="selectSignatureStyle(i)">
+                <img [src]="base64ToDataUrl(style.base64)" [alt]="'Signature ' + (i + 1)" class="style-image" />
+              </button>
+            </div>
+          </div>
+
+          <!-- <div class="type-preview-container" *ngIf="selectedDataUrl">
+            <div class="preview-label">Selected:</div>
+            <img [src]="selectedDataUrl" alt="Selected signature" class="type-preview-image" />
+          </div> -->
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!selectedDataUrl" (click)="useSelection()">Use this</button>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading-state">
+    <mat-spinner diameter="28"></mat-spinner>
+    <span>Loading suggestions…</span>
+  </div>
+</ng-template>

@@ -1,0 +1,206 @@
+// notary-form.component.scss
+.notary-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  
+  mat-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    
+    .form-container {
+      margin-top: 2rem;
+      
+      .step-content {
+        animation: fadeIn 0.3s ease;
+        
+        .mat-headline {
+          margin-bottom: 1.5rem;
+          font-size: 24px;
+          font-weight: 500;
+          color: #333;
+        }
+      }
+      
+      .upload-area {
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+        
+        &:hover {
+          border-color: #2196F3;
+          background-color: rgba(33, 150, 243, 0.05);
+        }
+        
+        .upload-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          color: #757575;
+          margin-bottom: 1rem;
+        }
+        
+        p {
+          margin: 0.5rem 0;
+          color: #555;
+        }
+        
+        .hint {
+          font-size: 0.875rem;
+          color: #757575;
+        }
+      }
+      
+      .time-slots-container {
+        margin-top: 1rem;
+        
+        .mat-subheader {
+          font-size: 16px;
+          font-weight: 500;
+          color: #555;
+          margin-bottom: 0.5rem;
+        }
+        
+        .mat-chip-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          margin-top: 0.5rem;
+          
+          .mat-chip {
+            background: #f5f5f5;
+            color: #333;
+            
+            &.mat-chip-selected {
+              background: #2196F3;
+              color: white;
+            }
+          }
+        }
+      }
+      
+      .payment-summary {
+        margin-top: 2rem;
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 1.5rem;
+        
+        .mat-card-title {
+          font-size: 18px;
+          font-weight: 500;
+          color: #333;
+          margin-bottom: 1.5rem;
+        }
+        
+        .summary-item {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.75rem;
+          color: #555;
+          
+          &.total {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+            font-weight: 500;
+            color: #333;
+          }
+        }
+      }
+      
+      .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+        
+        button {
+          mat-icon {
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            font-size: 18px;
+            height: 18px;
+            width: 18px;
+          }
+          
+          &.mat-stroked-button {
+            border: 1px solid #2196F3;
+            color: #2196F3;
+          }
+          
+          &.mat-raised-button {
+            background: #2196F3;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  
+  .col {
+    flex: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Additional styles for form fields
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  
+  &.mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+      background-color: rgba(0, 0, 0, 0.04);
+      border-radius: 4px;
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+    }
+    
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+  
+  .mat-form-field-label {
+    color: #757575;
+  }
+  
+  .mat-input-element {
+    color: #333;
+  }
+  
+  .mat-error {
+    color: #f44336;
+    font-size: 0.875rem;
+  }
+}
+
+.mat-list {
+  .mat-list-item {
+    .file-size {
+      font-size: 0.875rem;
+      color: #757575;
+    }
+    
+    .mat-icon {
+      color: #757575;
+    }
+  }
+}

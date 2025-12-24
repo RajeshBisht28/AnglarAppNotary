@@ -1,0 +1,19 @@
+<div class="success-container" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card class="success-card">
+    <mat-card-content>
+      <div class="icon-wrapper">
+        <mat-icon class="success-icon">check_circle</mat-icon>
+      </div>
+      <h2 class="title">Signup Successful 🎉</h2>
+      <p class="subtitle">
+        Your account has been <strong>verified successfully</strong>.  
+        You can now log in using your registered email.
+      </p>
+
+      <div class="actions" fxLayout="row" fxLayoutAlign="center center">
+         <button *ngIf="lnentryid" mat-raised-button color="primary" [routerLink]="['/auth/notary-login']">Go to Login</button>
+         <button *ngIf="LNUID" mat-raised-button color="primary" [routerLink]="['/auth/login']">Go to Login</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

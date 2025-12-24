@@ -1,0 +1,27 @@
+<div class="action-cards-container">
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+    <h1>Welcome back, {{ userName }}</h1>
+    <p>Notarize or eSign a document below.</p>
+  </div>
+
+  <!-- Action Cards -->
+  <div class="action-cards">
+    <mat-card 
+      *ngFor="let card of actionCards" 
+      class="action-card"
+      [ngClass]="card.type + '-card'"
+      (click)="onActionClick(card.type)">
+      <mat-card-content>
+        <div class="card-icon">
+          <mat-icon>{{ card.icon }}</mat-icon>
+        </div>
+        <h2>{{ card.title }}</h2>
+        <p>{{ card.description }}</p>
+        <button mat-raised-button color="primary" class="action-btn">
+          {{ card.buttonText }}
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

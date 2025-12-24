@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leaflet-enotary-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: leaflet-enotary-ui
+  template:
+    metadata:
+      labels:
+        app: leaflet-enotary-ui
+    spec:
+      containers:
+        - name: angular-ui
+          image: leaflet-enotary-ui:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

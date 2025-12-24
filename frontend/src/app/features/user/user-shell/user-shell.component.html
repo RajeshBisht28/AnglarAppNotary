@@ -1,0 +1,24 @@
+<div class="shell-layout">
+  <app-user-header></app-user-header>
+
+  <mat-sidenav-container class="app-body">
+
+    <mat-sidenav #drawer [mode]="mode" [opened]="opened" [fixedInViewport]="true" [fixedTopGap]="56">
+      <app-user-sidebar></app-user-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+    
+    <mat-sidenav
+      #rightDrawer
+      position="end"
+      [opened]="opened"
+      mode="side"
+      [fixedInViewport]="true"
+      [fixedTopGap]="56"
+    >
+    </mat-sidenav>
+  </mat-sidenav-container>
+</div>

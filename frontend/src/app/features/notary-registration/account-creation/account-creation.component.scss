@@ -1,0 +1,25 @@
+.step-content {
+  .mat-headline {
+    margin-bottom: 1.5rem;
+  }
+
+  mat-checkbox {
+    display: block;
+    margin: 1.5rem 0;
+    
+    a {
+      color: #2196F3;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+  }
+}

@@ -1,0 +1,60 @@
+.picker-content {
+  min-height: 160px;
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.error-text {
+  color: #d32f2f;
+  padding: 8px 0 0 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.grid-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(25, 118, 210, 0.04);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 10px rgba(25, 118, 210, 0.2);
+    border-color: rgba(25, 118, 210, 0.35);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 100px;
+    object-fit: contain;
+  }
+}
+
+.grid-item--selected {
+  border-color: #1976d2;
+  box-shadow: 0 2px 10px rgba(25, 118, 210, 0.35);
+}
+
+.check-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #1976d2;
+}

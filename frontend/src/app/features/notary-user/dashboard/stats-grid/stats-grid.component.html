@@ -1,0 +1,7 @@
+<div class="stats-grid">
+  <notary-stat-card
+    *ngFor="let stat of stats; let i = index"
+    [stat]="stat"
+    (cardClick)="onStatCardClick(i)"
+  ></notary-stat-card>
+</div>

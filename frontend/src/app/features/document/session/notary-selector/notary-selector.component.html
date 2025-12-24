@@ -1,0 +1,61 @@
+<div class="notary-selector-wrapper">
+  <div class="selector-header">
+    <h3 class="selector-title">Select Your Notary</h3>
+    <p class="selector-description">
+      Choose from available notaries to proceed with your {{ sessionType === 'Instant' ? 'instant' : 'scheduled' }} session.
+    </p>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="loading-text">Loading available notaries...</p>
+  </div>
+
+  <div *ngIf="!isLoading && notaries.length === 0" class="empty-state">
+    <mat-icon class="empty-icon">no_accounts</mat-icon>
+    <p class="empty-text">No notaries available at this time</p>
+  </div>
+
+  <div *ngIf="!isLoading && notaries.length > 0" class="notary-selector-content">
+    <div class="notaries-grid">
+      <mat-card
+        *ngFor="let notary of notaries"
+        class="notary-card"
+        [class.selected]="selectedNotary === notary"
+        [class.disabled]="isSaving"
+        (click)="!isSaving && selectNotary(notary)"
+        tabindex="0"
+        role="button"
+        [attr.aria-label]="'Select ' + getNotaryDisplayName(notary) + ' as your notary'"
+        [attr.aria-disabled]="isSaving">
+
+        <mat-card-content class="card-content">
+          <div class="notary-avatar">
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+          </div>
+
+          <div class="notary-info">
+            <h4 class="notary-name">{{ getNotaryDisplayName(notary) }}</h4>
+            <p class="notary-email">{{ notary.email }}</p>
+          </div>
+
+          <div class="selection-indicator">
+            <mat-icon *ngIf="selectedNotary === notary" class="selected-check">check_circle</mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="action-footer">
+      <button
+        mat-raised-button
+        color="primary"
+        class="continue-button"
+        (click)="continueWithNotary()"
+        [disabled]="!selectedNotary || isSaving">
+        <span *ngIf="!isSaving">Continue</span>
+        <mat-spinner *ngIf="isSaving" diameter="20" class="button-spinner"></mat-spinner>
+      </button>
+    </div>
+  </div>
+</div>

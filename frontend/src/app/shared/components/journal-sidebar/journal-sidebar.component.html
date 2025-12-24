@@ -1,0 +1,349 @@
+<div class="journal-overlay" *ngIf="isOpen" (click)="close()"></div>
+<div class="journal-sidebar" [class.open]="isOpen">
+  <div class="sidebar-header">
+    <h2 class="sidebar-title">Journal Details</h2>
+    <button mat-icon-button aria-label="Close journal sidebar" (click)="close()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="sidebar-content">
+    <div *ngIf="isLoading" class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading journal details...</p>
+    </div>
+
+    <div *ngIf="errorMessage && !isLoading" class="error-state">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage && journalEntry" class="journal-details">
+      <!-- Package Information Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Entry & Session Metadata (System-Generated)</h3>
+        <div class="detail-row">
+          <span class="detail-label">Electronic Journal Entry ID:</span>
+          <span class="detail-value">{{ journalEntry.packageId }}</span>
+        </div>
+        <div class="detail-row" *ngIf="journalEntry.sessionId">
+          <span class="detail-label">Transaction / Session ID :</span>
+          <span class="detail-value">{{ journalEntry.sessionId }}</span>
+        </div>
+        <div class="detail-row" *ngIf="journalEntry.platformUsed">
+          <span class="detail-label">Platform Name:</span>
+          <span class="detail-value">{{ journalEntry.platformUsed }}</span>
+        </div>
+        <div class="detail-row" *ngIf="journalEntry.platformUsed">
+          <span class="detail-label">Platform Version:</span>
+          <span class="detail-value">{{ journalEntry.platformVersion }}</span>
+        </div>
+        <div class="detail-row" *ngIf="journalEntry.platformUsed">
+          <span class="detail-label">Notary User ID:</span>
+          <span class="detail-value">{{ journalEntry.notaryUserId }}</span>
+        </div>
+        <div class="detail-row" *ngIf="journalEntry.platformUsed">
+          <span class="detail-label">Jurisdiction / Commission State:</span>
+          <span class="detail-value">{{ journalEntry.jurisdictionCommissionState }}</span>
+        </div>
+
+        <!-- <div class="detail-row">
+          <span class="detail-label">Package Name:</span>
+          <span class="detail-value">{{ journalEntry.packageName }}</span>
+        </div>
+        
+        <div class="detail-row">
+          <span class="detail-label">Status:</span>
+          <span class="detail-value status-badge" [ngClass]="(journalEntry.status || '').toLowerCase()">
+            {{ journalEntry.status }}
+          </span>
+        </div> -->
+      </div>
+
+      <!-- Notary Information -->
+       <div class="detail-section">
+        <h3 class="section-title">Notary Information</h3>
+        <div class="detail-row">
+          <span class="detail-label">Notary Full Name:</span>
+          <span class="detail-value">{{ journalEntry.notaryFullName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Commission Number:</span>
+          <span class="detail-value">{{ journalEntry.notaryCommissionNumber }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Commission Expiration Date:</span>
+          <span class="detail-value">{{ journalEntry.notaryCommissionExpiryDate }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Digital Certificate ID:</span>
+          <span class="detail-value">{{ journalEntry.notaryDegitalCertificateId }}</span>
+        </div>
+      </div>
+
+      <!-- Remote Session Details -->
+      <div class="detail-section">
+        <h3 class="section-title">Remote Session Details</h3>
+        <div class="detail-row">
+          <span class="detail-label">Date of Notarization:</span>
+          <span class="detail-value">{{ journalEntry.dateOfNotarization }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Time of Notarization:</span>
+          <span class="detail-value">{{ journalEntry.timeOfNotarization }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Timezone:</span>
+          <span class="detail-value">{{ journalEntry.timezone }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Type of Notarial Act:</span>
+          <span class="detail-value">{{ journalEntry.typeOfNotarialAct }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Mode of Appearance:</span>
+          <span class="detail-value">{{ journalEntry.modeOfAppearance }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Recording Consent Captured:</span>
+          <span class="detail-value">{{ journalEntry.recordingConsentCaptured }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">AV Recording File ID :</span>
+          <span class="detail-value">{{ journalEntry.avRecordingFileId }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Recording Retention Period:</span>
+          <span class="detail-value">{{ journalEntry.recordingRetentionPeriod }}</span>
+        </div>
+      </div>
+
+      <!-- Location Information Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Location Information</h3>
+        <div class="detail-row">
+          <span class="detail-label">Notary Physical Location:</span>
+          <span class="detail-value">{{ journalEntry.notaryPhysicalLocation }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Signer Declared Location:</span>
+          <span class="detail-value">{{ journalEntry.signerDeclaredLocation }}</span>
+        </div>
+      </div>
+
+      <!-- Document Information Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Documents Information</h3>      
+        <div class="document-block" *ngFor="let doc of journalEntry.documents; let i = index">
+          <h4 class="sub-section-title">Document {{ i + 1 }}</h4>  
+          <div class="detail-row">
+            <span class="detail-label">Document Name:</span>
+            <span class="detail-value">{{ doc.name }}</span>
+          </div>    
+          <div class="detail-row">
+            <span class="detail-label">Document Title / Type:</span>
+            <span class="detail-value">
+              {{ doc.documentType }}
+            </span>
+          </div>
+      
+          <div class="detail-row">
+            <span class="detail-label">Document Date:</span>
+            <span class="detail-value">{{ doc.documentDate }}</span>
+          </div>
+      
+          <div class="detail-row">
+            <span class="detail-label">Number of Pages:</span>
+            <span class="detail-value">{{ doc.numberOfPages }}</span>
+          </div>
+      
+          <div class="detail-row">
+            <span class="detail-label">Document Hash (Tamper-Evident Seal):</span>
+            <span class="detail-value document-hash">
+              {{ doc.documentHash }}
+            </span>
+          </div>
+      
+          <div class="detail-row">
+            <span class="detail-label">Electronic Seal Applied:</span>
+            <span class="detail-value">{{ doc.electronicSealApplied }}</span>
+          </div>
+          <hr class="signer-divider" />
+        </div>
+      </div>
+
+
+      <!-- Signer Information Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Signers Information</h3>
+      
+        <div class="signer-block" *ngFor="let signer of journalEntry.signers; let i = index">
+          <h4 class="sub-section-title">Signer {{ i + 1 }}</h4>
+      
+          <div class="detail-row">
+            <span class="detail-label">Role:</span>
+            <span class="detail-value">{{ signer.signerRole }}</span>
+          </div>
+      
+          <div class="detail-row">
+            <span class="detail-label">Full Name:</span>
+            <span class="detail-value">{{ signer.fullName }}</span>
+          </div>
+      
+          <div class="detail-row">
+            <span class="detail-label">Email:</span>
+            <span class="detail-value">{{ signer.emailAddress }}</span>
+          </div>
+      
+          <div class="detail-row">
+            <span class="detail-label">Electronic Signature Captured:</span>
+            <span class="detail-value">{{ signer.electronicSignatureCaptured }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Personally Known to Notary:</span>
+            <span class="detail-value">{{ signer.personallyKnownToNotary }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Identity Verification Method Used:</span>
+            <span class="detail-value">{{ signer.idVerificationMethodUsed }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">ID Type:</span>
+            <span class="detail-value">{{ signer.idType }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Issuing Authority:</span>
+            <span class="detail-value">{{ signer.issuingAuthority }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">ID Expiration Date:</span>
+            <span class="detail-value">{{ signer.idExpirationDate }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">ID Verification Result:</span>
+            <span class="detail-value">{{ signer.idVerificationResult }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">KBA Result :</span>
+            <span class="detail-value">{{ signer.kbaResult }}</span>
+          </div>
+          <hr class="signer-divider" />
+        </div>
+      </div>
+
+
+      <!-- Notarization Details Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Notarization Details</h3>
+        <div class="detail-row">
+          <span class="detail-label">Notarial Act Type:</span>
+          <span class="detail-value">{{ journalEntry.notarialActType }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">ID Method:</span>
+          <span class="detail-value">{{ journalEntry.idMethod }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">ID Number (Last 4):</span>
+          <span class="detail-value">{{ journalEntry.idNumberLast4 }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">KBA Status:</span>
+          <span class="detail-value">{{ journalEntry.kbaStatus }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Credential Analysis:</span>
+          <span class="detail-value">{{ journalEntry.credentialAnalysisStatus }}</span>
+        </div>
+        
+      </div>
+
+      <!-- Session Information Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Session Information</h3>
+        
+        <div class="detail-row" *ngIf="journalEntry.sessionStartTime">
+          <span class="detail-label">Start Time:</span>
+          <span class="detail-value">{{ formatDateTime(journalEntry.sessionStartTime) }}</span>
+        </div>
+        <div class="detail-row" *ngIf="journalEntry.sessionEndTime">
+          <span class="detail-label">End Time:</span>
+          <span class="detail-value">{{ formatDateTime(journalEntry.sessionEndTime) }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Recording link:</span>
+          <span class="detail-value"><a href="{{ journalEntry.videoRecordingLink }}">Recording Link</a></span>
+        </div>
+      </div>
+
+
+      <!-- Fee Information Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Fees & Payment</h3>
+        <div class="detail-row">
+          <span class="detail-label">Fee Collected (USD):</span>
+          <span class="detail-value">{{ journalEntry.feeCollectedUsd }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Payment Reference:</span>
+          <span class="detail-value">{{ journalEntry.paymentReference }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Payment Method:</span>
+          <span class="detail-value">{{ journalEntry.paymentMethod }}</span>
+        </div>
+      </div>
+
+      <!-- Notes Section -->
+      <div class="detail-section">
+        <h3 class="section-title">Exceptions & Notes</h3>
+        <div class="detail-row">
+          <span class="detail-label">Session Interruptions / Reconnects:</span>
+          <span class="detail-value">{{ journalEntry.sessionInterruptionsReconnects }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Special Circumstances:</span>
+          <span class="detail-value">{{ journalEntry.specialCircustances }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Notary Remarks:</span>
+          <span class="detail-value">{{ journalEntry.notes }}</span>
+        </div>
+      </div>
+
+      <!-- Completion & Audit Controls -->
+      <div class="detail-section">
+        <h3 class="section-title">Completion & Audit Controls</h3>
+        <div class="detail-row">
+          <span class="detail-label">Journal Entry Finalized Timestamp:</span>
+          <span class="detail-value">{{ journalEntry.ronFinalizedTimestamp }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Notary Digital Signature Applied:</span>
+          <span class="detail-value">{{ journalEntry.notaryDigitalSealApplied }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Audit Trail Enabled:</span>
+          <span class="detail-value">{{ journalEntry.auditTrialEnabled }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Entry Locked Against Modification:</span>
+          <span class="detail-value">{{ journalEntry.entryLockedAgainstModification }}</span>
+        </div>
+      </div>
+
+      <!-- Actions Section -->
+      <div class="detail-section action-section">
+        <button 
+          mat-raised-button 
+          color="primary"
+          *ngIf="journalEntry.videoRecordingLink"
+          (click)="downloadRecordSession(journalEntry)"
+          class="action-button">
+          <mat-icon>download</mat-icon>
+          <span>Download Recording</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

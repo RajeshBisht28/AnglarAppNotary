@@ -1,0 +1,81 @@
+.stat-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  mat-card-content {
+    padding: 24px !important;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stat-icon {
+    flex-shrink: 0;
+
+    mat-icon {
+      font-size: 2.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+
+  .stat-content {
+    flex: 1;
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a202c;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #718096;
+      font-weight: 500;
+    }
+  }
+
+  // Card type styles
+  &.stat-primary .stat-icon mat-icon {
+    color: #667eea;
+  }
+
+  &.stat-warning .stat-icon mat-icon {
+    color: #ed8936;
+  }
+
+  &.stat-success .stat-icon mat-icon {
+    color: #48bb78;
+  }
+
+  &.stat-info .stat-icon mat-icon {
+    color: #4299e1;
+  }
+}
+
+@media (max-width: 768px) {
+  .stat-card mat-card-content {
+    padding: 16px !important;
+    gap: 12px;
+  }
+
+  .stat-icon mat-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .stat-content .stat-number {
+    font-size: 1.5rem;
+  }
+}

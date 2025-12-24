@@ -1,0 +1,18 @@
+.content-container {
+  padding: 16px;
+}
+
+.cropper-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 300px;
+}
+
+.slider-container {
+  padding: 8px 24px;
+}
+
+mat-slider {
+  width: 100%;
+}

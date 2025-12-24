@@ -1,0 +1,30 @@
+<ng-container *ngIf="package$ | async as package; else loading">
+  <div class="esign-layout">
+
+    <main class="center-canvas" #mainParent>
+      <div class="document" *ngFor="let document of package.documents">
+        <div class="pages">
+          <div class="page" *ngFor="let page of document.pages; let pageIndex = index">
+            <img [src]="page.pageURL" (load)="imageLoad()" />
+            <div class="overlay-div" [id]="'d' + document.documentId + 'p' + page.pageNumber"
+              [attr.page-height]="page.height" [attr.page-width]="page.width" #parent>
+            </div>
+            <div class="page-title">
+              <div>Page {{ pageIndex + 1 }}</div>
+              <div>{{ document.name }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="loading-overlay">
+    <div class="loading-container">
+      <mat-spinner diameter="60"></mat-spinner>
+      <p>Loading...</p>
+    </div>
+  </div>
+</ng-template>

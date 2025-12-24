@@ -1,0 +1,137 @@
+<div class="document-vault-container">
+  <mat-card class="vault-card">
+    <div class="toolbar-row">
+      <div class="left-controls">
+        <h2 class="vault-title">Document Vault</h2>
+      </div>
+      <div class="right-controls">
+        <div class="search-bar">
+          <mat-icon>search</mat-icon>
+          <input type="text" [ngModel]="searchQuery" (ngModelChange)="onSearch($event)" placeholder="Search packages..."
+            class="search-input" />
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <div class="table-scroll">
+        <table mat-table [dataSource]="dataSource" matSort class="documents-table mat-elevation-z1">
+          <ng-container matColumnDef="packageName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Package Name</th>
+            <td mat-cell *matCellDef="let pkg">
+              <div class="package-cell">
+                <div class="package-name">{{ pkg.lnPackageName }}</div>
+                <div class="signers-display">
+                  <span [matTooltip]="getSignersDisplay(pkg).tooltip"
+                    [matTooltipDisabled]="!getSignersDisplay(pkg).tooltip" class="signers-text">
+                    {{ getSignersDisplay(pkg).display }}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let pkg">
+              <span class="description-text">{{ pkg.lnPackageDesc }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let pkg">
+              <span class="status-chip" [ngClass]="pkg.lnPackageStatus.toLowerCase()">
+                {{ pkg.lnPackageStatus }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="expirationOn">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Expiration On</th>
+            <td mat-cell *matCellDef="let pkg">
+              <span class="date-text">{{ pkg.expirationOn | date: 'MMM dd, yyyy' }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="idDocumentVerified">
+            <th mat-header-cell *matHeaderCellDef>ID Document Verified</th>
+            <td mat-cell *matCellDef="let pkg">
+              <span class="verification-badge" [ngClass]="pkg.idDocumentVerified === 'Y' ? 'verified' : 'not-verified'">
+                {{ pkg.idDocumentVerified === 'Y' ? 'Yes' : 'No' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="paymentDone">
+            <th mat-header-cell *matHeaderCellDef>Payment Done</th>
+            <td mat-cell *matCellDef="let pkg">
+              <span class="payment-badge" [ngClass]="pkg.isPaymentDone === 'Y' ? 'paid' : 'pending'">
+                {{ pkg.isPaymentDone === 'Y' ? 'Paid' : 'Pending' }}
+              </span>
+
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="actions-header">Actions</th>
+            <td mat-cell *matCellDef="let pkg" class="actions-cell">
+              <button mat-icon-button [matMenuTriggerFor]="rowMenu" aria-label="Package actions">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #rowMenu="matMenu">
+                <button mat-menu-item (click)="onViewPackage(pkg)">
+                  <mat-icon>visibility</mat-icon>
+                  <span>View</span>
+                </button>
+                <button mat-menu-item (click)="onMakePayment(pkg)"
+                  *ngIf="pkg.isPaymentDone === 'N' && !['Created', 'Sent'].includes(pkg.lnPackageStatus)">
+                  <mat-icon>payment</mat-icon>
+                  <span>Make Payment</span>
+                </button>
+
+                <button mat-menu-item (click)="joinSession(pkg)" *ngIf="pkg.lnPackageStatus === 'Sent'">
+                  <mat-icon>video_call</mat-icon>
+                  <span>Join Session</span>
+                </button>
+
+                <button mat-menu-item (click)="onContinue(pkg)" *ngIf="pkg.lnPackageStatus === 'Created'">
+                  <mat-icon>arrow_circle_right</mat-icon>
+                  <span>continue</span>
+                </button>
+
+                <button mat-menu-item (click)="onViewAuditTrail(pkg)">
+                  <mat-icon>history</mat-icon>
+                  <span>Audit Trail</span>
+                </button>
+                <button mat-menu-item (click)="onDownload(pkg)">
+                  <mat-icon>download</mat-icon>
+                  <span>Download</span>
+                </button>
+                <button mat-menu-item (click)="onDelete(pkg)" class="delete-action">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="data-row"></tr>
+        </table>
+      </div>
+
+      <div class="pagination-wrapper">
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" aria-label="Select page"></mat-paginator>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<app-audit-trail-panel
+  [packageId]="selectedPackageId"
+  [isOpen]="isAuditTrailOpen"
+  (closePanel)="closeAuditTrail()">
+</app-audit-trail-panel>
+
+<notary-loading [loaderType]="'spinner'"></notary-loading>

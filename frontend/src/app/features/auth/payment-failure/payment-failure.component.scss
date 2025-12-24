@@ -1,0 +1,68 @@
+.payment-failure-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f6f7f8;
+  font-family: 'Inter', sans-serif;
+}
+
+.payment-failure-card {
+  width: 380px;
+  text-align: center;
+  padding: 32px 24px;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffe5e5;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px auto;
+}
+
+.error-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 16px 0 8px 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.action-btn {
+  width: 100%;
+  font-weight: 600;
+  height: 44px;
+
+  &.secondary {
+    border-color: #1976d2;
+  }
+}

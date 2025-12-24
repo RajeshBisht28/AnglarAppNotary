@@ -1,0 +1,32 @@
+<div class="step-content">
+  <notary-loading [loaderType]="'spinner'" *ngIf="isUploading"></notary-loading>
+
+  <h2 class="mat-headline">Upload Documents</h2>
+
+  <!-- Drag & Drop / Click Upload -->
+  <div class="upload-area"
+       (click)="fileInput.click()"
+       (drop)="onDrop($event)"
+       (dragover)="onDragOver($event)">
+    <input #fileInput type="file" multiple
+           (change)="onFileSelected($event)"
+           style="display:none;">
+    <mat-icon class="upload-icon">cloud_upload</mat-icon>
+    <p>Click to browse or drag and drop files here</p>
+    <p class="hint">Supported formats: PDF, DOC, DOCX, JPG, PNG (Max 10MB each)</p>
+  </div>
+
+  <!-- Thumbnails -->
+  <div class="thumbnail-container" *ngIf="uploadedDocs.length > 0">
+    <div class="thumbnail-box" *ngFor="let doc of uploadedDocs; let i = index">
+      <img [src]="doc.documentFirstPageImageUrl" alt="{{doc.documentName}}" />
+      <div class="thumbnail-footer">
+        <span>{{ doc.documentName }}</span>
+        <button mat-icon-button color="warn" (click)="removeFile(i, doc)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

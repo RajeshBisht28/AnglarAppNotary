@@ -1,0 +1,11 @@
+<div class="thumbs-wrapper">
+  <div class="thumb-card" *ngFor="let d of documents">
+    <div class="doc-title">{{ d.name }}</div>
+    <div class="thumb-list">
+      <button class="thumb-item" *ngFor="let p of d.pages" (click)="onSelect(d.documentId, p)" type="button">
+        <img [src]="p.pageURL" [alt]="'Page ' + p.pageNumber" />
+        <span class="thumb-caption">Page {{ p.pageNumber }}</span>
+      </button>
+    </div>
+  </div>
+</div>

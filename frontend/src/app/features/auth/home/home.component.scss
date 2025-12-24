@@ -1,0 +1,138 @@
+.home-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.company-side {
+  flex: 1;
+  background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+  color: white;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    //background: url('assets/notary-pattern.png') center/cover;
+    opacity: 0.05;
+  }
+}
+
+.company-content {
+  max-width: 600px;
+  z-index: 1;
+  padding: 40px;
+  animation: fadeIn 1s ease-out;
+}
+
+.company-logo {
+  height: 60px;
+  margin-bottom: 30px;
+}
+
+.company-side h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.features {
+  margin: 40px 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+
+  mat-icon {
+    margin-right: 15px;
+    color: #4fd1c5;
+    font-size: 1.8rem;
+    width: auto;
+    height: auto;
+  }
+}
+
+.testimonial {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 10px;
+  margin-top: 50px;
+  border-left: 4px solid #4fd1c5;
+
+  p {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .author {
+    font-weight: 500;
+    opacity: 0.8;
+  }
+}
+
+.outlet-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background-color: #f8f9fa;
+}
+
+@media (max-width: 992px) {
+  .home-container {
+    flex-direction: column;
+  }
+
+  .company-side, .outlet-side {
+    padding: 30px 20px;
+    flex: none;
+    min-height: 50vh;
+  }
+
+  .company-content {
+    padding: 20px;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .feature-item {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .company-side h1 {
+    font-size: 1.8rem;
+  }
+
+  .feature-item {
+    font-size: 1rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
